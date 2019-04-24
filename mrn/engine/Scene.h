@@ -1,0 +1,27 @@
+//
+// Created by Marian Cichy
+//
+
+#pragma once
+
+#include "cameras/FpsCamera.h"
+#include "Model.h"
+#include "cameras/ArcballCamera.h"
+
+namespace mrn {
+
+    class Scene {
+    public:
+        Scene();
+        ~Scene();
+        void addSceneNode(mrn::Model &model);
+        mrn::ArcballCamera cam;
+        std::vector<mrn::Model> objects;
+
+        void render();
+        void setPolygonMode(uint16 mode);
+
+    private:
+        uint16 polygon_mode;
+    };
+}
