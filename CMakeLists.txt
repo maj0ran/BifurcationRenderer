@@ -42,7 +42,7 @@ set(SOURCES main.cpp
         mrn/engine/cameras/ArcballCamera.cpp
         mrn/engine/cameras/ArcballCamera.h
         mrn/engine/Primitives.cpp
-        mrn/MathSolver.cpp mrn/MathSolver.h mrn/engine/cameras/Camera.cpp mrn/engine/cameras/Camera.h)
+        mrn/MathSolver.cpp mrn/MathSolver.h mrn/engine/cameras/Camera.cpp mrn/engine/cameras/Camera.h mrn/application/DuffingSolver.cpp mrn/application/DuffingSolver.h)
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 target_link_libraries(${PROJECT_NAME} glfw freetype)
