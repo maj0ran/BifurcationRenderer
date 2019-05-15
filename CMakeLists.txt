@@ -3,21 +3,27 @@ project(BifurcationRenderer)
 
 set(CMAKE_CXX_STANDARD 17)
 
+
+
+
 # GLFW
-find_library(GLFW NAMES libglfw3 PATHS 3rdparty/glfw/lib)
-include_directories(3rdparty/glfw/include/GLFW)
+add_subdirectory(3rdparty/glfw-3.3)
+include_directories(3rdparty/glfw-3.3/include/GLFW)
+
+# GLM
+# GLM is header-only so no compiling needed
+include_directories(3rdparty/glm/glm)
 
 # GLAD
 include_directories(3rdparty/glad/include)
 
-# GLM
-include_directories(3rdparty/glm/include)
+#stb_image
+include_directories(3rdparty/stb)
 
-# FREETYPE
-find_library(FT NAMES libfreetype PATHS 3rdparty/freetype/lib)
-include_directories(3rdparty/freetype/include)
+#Freetype
+add_subdirectory(3rdparty/freetype-2.10.0)
+include_directories(3rdparty/freetype-2.10.0/include)
 
-# Compilation and Linking
 set(SOURCES main.cpp
         3rdparty/glad/src/glad.c
         mrn/engine/Window.cpp
@@ -38,11 +44,8 @@ set(SOURCES main.cpp
         mrn/engine/Primitives.cpp
         mrn/MathSolver.cpp mrn/MathSolver.h mrn/engine/cameras/Camera.cpp mrn/engine/cameras/Camera.h)
 
-
 add_executable(${PROJECT_NAME} ${SOURCES})
-target_link_libraries(${PROJECT_NAME} ${GLFW} ${FT})
+target_link_libraries(${PROJECT_NAME} glfw freetype)
 
-# Forcing CMake to copy non-code files in the build directory
 add_custom_command(TARGET ${PROJECT_NAME} PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/shader $<TARGET_FILE_DIR:${PROJECT_NAME}>/shader)
-add_custom_command(TARGET ${PROJECT_NAME} PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/textures $<TARGET_FILE_DIR:${PROJECT_NAME}>/textures)
-add_custom_command(TARGET ${PROJECT_NAME} PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/textures $<TARGET_FILE_DIR:${PROJECT_NAME}>/fonts)
+add_custom_command(TARGET ${PROJECT_NAME} PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/fonts $<TARGET_FILE_DIR:${PROJECT_NAME}>/fonts)

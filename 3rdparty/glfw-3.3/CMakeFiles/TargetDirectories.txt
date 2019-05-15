@@ -1,0 +1,14 @@
+/home/mrn/Code/_libs/glfw-3.3/CMakeFiles/install/strip.dir
+/home/mrn/Code/_libs/glfw-3.3/CMakeFiles/edit_cache.dir
+/home/mrn/Code/_libs/glfw-3.3/CMakeFiles/uninstall.dir
+/home/mrn/Code/_libs/glfw-3.3/CMakeFiles/rebuild_cache.dir
+/home/mrn/Code/_libs/glfw-3.3/CMakeFiles/list_install_components.dir
+/home/mrn/Code/_libs/glfw-3.3/CMakeFiles/install/local.dir
+/home/mrn/Code/_libs/glfw-3.3/CMakeFiles/install.dir
+/home/mrn/Code/_libs/glfw-3.3/src/CMakeFiles/install/strip.dir
+/home/mrn/Code/_libs/glfw-3.3/src/CMakeFiles/edit_cache.dir
+/home/mrn/Code/_libs/glfw-3.3/src/CMakeFiles/glfw.dir
+/home/mrn/Code/_libs/glfw-3.3/src/CMakeFiles/rebuild_cache.dir
+/home/mrn/Code/_libs/glfw-3.3/src/CMakeFiles/list_install_components.dir
+/home/mrn/Code/_libs/glfw-3.3/src/CMakeFiles/install/local.dir
+/home/mrn/Code/_libs/glfw-3.3/src/CMakeFiles/install.dir

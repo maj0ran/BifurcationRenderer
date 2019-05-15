@@ -4,7 +4,6 @@
 // Created by Marian Cichy
 //
 
-#include <ext/matrix_transform.hpp>
 #include "ArcballCamera.h"
 
 mrn::ArcballCamera::ArcballCamera(float phi, float theta, float distance, glm::vec3 target) {

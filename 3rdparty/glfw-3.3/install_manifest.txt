@@ -1,0 +1,8 @@
+/home/mrn/Code/_libs/glfw-3.3/install/include/GLFW/glfw3native.h
+/home/mrn/Code/_libs/glfw-3.3/install/include/GLFW/glfw3.h
+/home/mrn/Code/_libs/glfw-3.3/install/lib64/cmake/glfw3/glfw3Config.cmake
+/home/mrn/Code/_libs/glfw-3.3/install/lib64/cmake/glfw3/glfw3ConfigVersion.cmake
+/home/mrn/Code/_libs/glfw-3.3/install/lib64/cmake/glfw3/glfw3Targets.cmake
+/home/mrn/Code/_libs/glfw-3.3/install/lib64/cmake/glfw3/glfw3Targets-noconfig.cmake
+/home/mrn/Code/_libs/glfw-3.3/install/lib64/pkgconfig/glfw3.pc
+/home/mrn/Code/_libs/glfw-3.3/install/lib64/libglfw3.a

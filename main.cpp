@@ -114,8 +114,8 @@ int main() {
             double fps = 1 / w->getDeltaTime();
             fps_str = std::to_string(fps);
         }
-        fontRenderer->renderText("FPS: " + fps_str, 0, w->getHeight() - 32, vec3(1.0, 0, 0));
-        fontRenderer->renderText("Vertex Count: " + std::to_string(vertex_count), 0, 0, vec3(1.0, 1.0, 0.0));
+        fontRenderer->renderText("FPS: " + fps_str, 0, 0, vec3(1.0, 0, 0));
+     //   fontRenderer->renderText("Vertex Count: " + std::to_string(vertex_count), 0, 0, vec3(1.0, 1.0, 0.0));
         scene->render();
         w->processInput(*scene);
 
