@@ -36,7 +36,11 @@ set(SOURCES main.cpp
         mrn/engine/cameras/ArcballCamera.cpp
         mrn/engine/cameras/ArcballCamera.h
         mrn/engine/Primitives.cpp
-        mrn/MathSolver.cpp mrn/MathSolver.h mrn/engine/cameras/Camera.cpp mrn/engine/cameras/Camera.h)
+        mrn/MathSolver.cpp mrn/MathSolver.h
+        mrn/engine/cameras/Camera.cpp mrn/engine/cameras/Camera.h
+        mrn/engine/eventbus/BusMember.cpp mrn/engine/eventbus/BusMember.h
+        mrn/engine/eventbus/EventBus.cpp mrn/engine/eventbus/EventBus.h
+        mrn/engine/Engine.cpp mrn/engine/Engine.h mrn/application/Bifurcation/P.cpp mrn/application/Bifurcation/P.h mrn/ui/Widget.cpp mrn/ui/Widget.h mrn/ui/Ui.cpp mrn/ui/Ui.h mrn/ui/Label.cpp mrn/ui/Label.h mrn/ui/WidgetElement.cpp mrn/ui/WidgetElement.h)
 
 
 add_executable(${PROJECT_NAME} ${SOURCES})

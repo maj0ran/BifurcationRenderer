@@ -25,14 +25,14 @@ namespace mrn {
         short polygon_mode = GL_FILL;
 
     public:
-        Window(int width, int height);
+        Window(uint32_t width, uint32_t height);
         ~Window();
 
         void setPolygonMode(short mode);
         double getDeltaTime();
-        void processInput(Scene &scene);
+        void processInput(Scene *scene);
 
-        void clear();
+
 
         void eventLoop();
 
@@ -40,8 +40,9 @@ namespace mrn {
         int getWidth() const;
         int getHeight() const;
 
-        void swapBuffers() const;
         int shouldClose() const;
+
+        void nextFrame();
 
 
 

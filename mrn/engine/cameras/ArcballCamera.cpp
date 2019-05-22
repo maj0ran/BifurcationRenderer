@@ -18,6 +18,7 @@ mrn::ArcballCamera::ArcballCamera(float phi, float theta, float distance, glm::v
     float camZ = glm::sin(theta) * glm::sin(phi) * distance;
 
     position = glm::vec3(camX, camY, camZ);
+
 }
 
 mrn::ArcballCamera::~ArcballCamera() {

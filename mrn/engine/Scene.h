@@ -16,12 +16,13 @@ namespace mrn {
         ~Scene();
         void addSceneNode(mrn::Model &model);
         mrn::ArcballCamera cam;
-        std::vector<mrn::Model> objects;
+
 
         void render();
         void setPolygonMode(uint16 mode);
 
     private:
+        std::vector<mrn::Model> objects;
         uint16 polygon_mode;
     };
 }

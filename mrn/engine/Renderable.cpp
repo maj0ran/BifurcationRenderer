@@ -39,4 +39,11 @@ namespace mrn {
     void Renderable::addVertex(mrn::Vertex &vertex) {
         this->vertices.push_back(vertex);
     }
+
+
+    void Renderable::addTriangleIndices(uint32 p1, uint32 p2, uint32 p3) {
+        this->indices.push_back(p1);
+        this->indices.push_back(p2);
+        this->indices.push_back(p3);
+    }
 }

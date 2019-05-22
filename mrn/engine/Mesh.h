@@ -21,7 +21,7 @@ namespace mrn {
         Mesh();
         ~Mesh() override;
 
-        void addTriangleIndices(uint32 p1, uint32 p2, uint32 p3);
+
 
 
     };

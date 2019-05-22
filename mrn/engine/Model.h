@@ -26,7 +26,7 @@ namespace mrn {
         void attachShader(Shader* shader);
 
         mat4 getTranslationMat();
-
+        size_t  getVertexCount();
     private:
         vec3 pos;
         vec3 rot;

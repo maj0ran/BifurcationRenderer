@@ -7,6 +7,8 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
+#include "mrn/engine/Engine.h"
+
 #include "mrn/engine/Window.h"
 #include "mrn/engine/FontRenderer.h"
 #include "mrn/engine/Vertex.h"
@@ -16,6 +18,9 @@
 #include "mrn/application/CoordSystem3D.h"
 #include "mrn/engine/Primitives.h"
 #include "mrn/MathSolver.h"
+#include "mrn/application/Bifurcation/P.h"
+#include "mrn/ui/Widget.h"
+#include "mrn/ui/WidgetElement.h"
 
 #include <gtc/matrix_transform.hpp>
 #include <glm.hpp>
@@ -27,6 +32,9 @@ void processInput(GLFWwindow *window, mrn::Scene* scene) {
 }
 
 int main() {
+    mrn::P solver = mrn::P();
+//    solver.calc();
+
     MathSolver m = MathSolver();
 
     std::vector<std::array<float, 3>> result = m.solve();
@@ -64,64 +72,55 @@ int main() {
 
 
 
+    //////////////////////////////////////////////////////////////////////////////////
+    const uint32_t win_width = 1200;
+    const uint32_t win_height =800;
+    mrn::Engine* engine = new mrn::Engine();
+    engine->createWindow(win_width, win_height);
+    engine->createScene();
 
-    mrn::Window* w = new mrn::Window(1200, 800);
     mrn::FontRenderer* fontRenderer = new mrn::FontRenderer();
-    glViewport(0, 0, 1200, 800);
-    glEnable(GL_DEPTH_TEST);
-    glLineWidth(1);
-    glPointSize(3);
 
-    mrn::Shader s("shader/default_mvp.vert", "shader/default.frag");
+
+    mrn::Shader s_default("shader/default_mvp.vert", "shader/default.frag");
 
     mrn::Model vis = mrn::Model();
     vis.vertex_data = &mesh;
-    vis.shader = &s;
+    vis.shader = &s_default;
     mesh.initBuf();
-
-    glm::mat4 projection = perspective(radians(45.0f), 1200.0f / 800.0f, 0.1f, 100.0f);
-    glm::mat4 view = glm::lookAt(vec3(0.0, 0.0, 3.0), vec3(0.0, 0.0, 2.0), vec3(0.0, 1.0, 0.0));
-
-    // mat4 view = mat4(1.0);
-    //  mat4 projection = mat4(1.0);
-    mat4 trans = mat4(1.0);
+    engine->getScene()->addSceneNode(vis);
 
 
-    mrn::Model grid;
-    mrn::Scene* scene = new mrn::Scene();
-
-    scene->objects.push_back(vis);
-
-    uint64 vertex_count = vis.vertex_data->vertices.size();
-
+    mrn::Model grid = mrn::Model();
     mrn::CoordSystem3D coord_sys = mrn::CoordSystem3D();
     coord_sys.initBuf();
     grid.vertex_data = &coord_sys;
-    grid.shader = &s;
+    grid.shader = &s_default;
 
-    scene->objects.push_back(grid);
-
+    engine->getScene()->addSceneNode(grid);
     std::string fps_str;
     int t = 0;
     int t_new = 0;
   //  fontRenderer->setFontSize(16);
     fontRenderer->setFont("fonts/arial.ttf");
-    while(!w->shouldClose()) {
-        w->clear();
+
+    // UI
+    mrn::ui::Widget* settings = new mrn::ui::Widget("Settings", 0, 0, 0.5, 0.5);
+    while(!engine->getWindow()->shouldClose()) {
         t = (int)glfwGetTime();
         if(t > t_new) {
             t_new = t;
-            double fps = 1 / w->getDeltaTime();
+            double fps = 1 / engine->getWindow()->getDeltaTime();
             fps_str = std::to_string(fps);
         }
-        fontRenderer->renderText("FPS: " + fps_str, 0, w->getHeight() - 32, vec3(1.0, 0, 0));
-        fontRenderer->renderText("Vertex Count: " + std::to_string(vertex_count), 0, 0, vec3(1.0, 1.0, 0.0));
-        scene->render();
-        w->processInput(*scene);
-
+        fontRenderer->renderText("FPS: " + fps_str, 0, engine->getWindow()->getHeight() - 32, vec3(1.0, 0, 0));
+        fontRenderer->renderText("Vertex Count: " + std::to_string(vis.getVertexCount()), 0, 0, vec3(1.0, 1.0, 0.0));
+        engine->renderScene();
+        engine->processInput();
+        settings->render();
         // glfw: poll events & swap buffers
         // --------------------------------
-        w->swapBuffers();
+        engine->getWindow()->nextFrame();
         glfwPollEvents();
     }
     return 0;

@@ -15,7 +15,7 @@ namespace mrn {
         virtual ~Renderable();
 
         void addVertex(mrn::Vertex &vertex);
-
+        void addTriangleIndices(uint32 p1, uint32 p2, uint32 p3);
         void initBuf();
 
         void bind();

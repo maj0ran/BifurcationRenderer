@@ -5,6 +5,7 @@
 #pragma once
 #include <glm.hpp>
 #include <ext/matrix_clip_space.hpp>
+#include "../eventbus/BusMember.h"
 
 namespace mrn {
     class ArcballCamera {
@@ -26,6 +27,9 @@ namespace mrn {
 
         float theta = 0; // XZ
         float phi = 0;
+
+
+        BusMember busComm;
     };
 
 }

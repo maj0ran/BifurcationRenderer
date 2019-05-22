@@ -37,5 +37,9 @@ namespace mrn {
         return trans_mat;
     }
 
+    size_t Model::getVertexCount() {
+        return vertex_data->vertices.size();
+    }
+
 }
 
