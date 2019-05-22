@@ -2,7 +2,7 @@
 // Created by Marian Cichy
 //
 
-#include <ext/matrix_transform.hpp>
+#include <gtc/matrix_transform.hpp>
 #include "Camera.h"
 
 float mrn::Camera::getFov() const {
