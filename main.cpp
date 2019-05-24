@@ -21,6 +21,7 @@
 #include "mrn/application/Bifurcation/P.h"
 #include "mrn/ui/Widget.h"
 #include "mrn/ui/WidgetElement.h"
+#include "mrn/engine/common.h"
 
 #include <gtc/matrix_transform.hpp>
 #include <glm.hpp>
@@ -32,6 +33,15 @@ void processInput(GLFWwindow *window, mrn::Scene* scene) {
 }
 
 int main() {
+
+    unsigned int a = 0b10010110101011110001110001011010;
+    auto v = toBytes(a);
+    unsigned int b = fromBytes<int>(v);
+
+    uint32_t c = 939;
+    auto v2 = toBytes(c);
+    uint32_t d = fromBytes<uint32_t>(v2);
+
     mrn::P solver = mrn::P();
 //    solver.calc();
 

@@ -15,11 +15,18 @@ namespace mrn {
         ~EventBus();
 
         void addNode(std::function<void (Event)> node);
-        void send(Event e);
+        void send(Event& e);
         void notify();
+
+        struct {
+            int window_width;
+            int window_height;
+        } memory;
     private:
         std::vector<std::function<void (Event)>> nodes;
         std::queue<Event> events;
+
+
 
     };
 

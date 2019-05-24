@@ -41,7 +41,7 @@ set(SOURCES main.cpp
         mrn/engine/Primitives.cpp
         mrn/MathSolver.cpp mrn/MathSolver.h
         mrn/engine/cameras/Camera.cpp mrn/engine/cameras/Camera.h
-        mrn/engine/Engine.cpp mrn/engine/Engine.h mrn/application/Bifurcation/P.cpp mrn/application/Bifurcation/P.h mrn/ui/Widget.cpp mrn/ui/Widget.h mrn/ui/Ui.cpp mrn/ui/Ui.h mrn/ui/Label.cpp mrn/ui/Label.h mrn/ui/WidgetElement.cpp mrn/ui/WidgetElement.h mrn/engine/eventbus/Event.cpp mrn/engine/eventbus/Event.h mrn/engine/eventbus/EventBus.cpp mrn/engine/eventbus/EventBus.h mrn/engine/eventbus/BusNode.cpp mrn/engine/eventbus/BusNode.h)
+        mrn/engine/Engine.cpp mrn/engine/Engine.h mrn/application/Bifurcation/P.cpp mrn/application/Bifurcation/P.h mrn/ui/Widget.cpp mrn/ui/Widget.h mrn/ui/Ui.cpp mrn/ui/Ui.h mrn/ui/Label.cpp mrn/ui/Label.h mrn/ui/WidgetElement.cpp mrn/ui/WidgetElement.h mrn/engine/eventbus/Event.cpp mrn/engine/eventbus/Event.h mrn/engine/eventbus/EventBus.cpp mrn/engine/eventbus/EventBus.h mrn/engine/eventbus/BusNode.cpp mrn/engine/eventbus/BusNode.h mrn/engine/eventbus/EventTypes.h)
 
 
 add_executable(${PROJECT_NAME} ${SOURCES})

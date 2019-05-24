@@ -17,7 +17,7 @@ namespace mrn {
     protected:
         EventBus* bus;
         std::function<void (Event)> getNotifyFunc();
-        void send(Event e);
+        void send(Event& e);
 
         virtual void onNotify(Event &e) { std::cout << "Event Received" << std::endl; };
     };

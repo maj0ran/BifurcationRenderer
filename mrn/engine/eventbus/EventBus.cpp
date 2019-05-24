@@ -14,10 +14,9 @@ mrn::EventBus::~EventBus() {
 
 void mrn::EventBus::addNode(std::function<void (mrn::Event)> node) {
     nodes.push_back(node);
-
 }
 
-void mrn::EventBus::send(mrn::Event e) {
+void mrn::EventBus::send(mrn::Event& e) {
     events.push(e);
 }
 

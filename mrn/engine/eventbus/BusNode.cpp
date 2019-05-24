@@ -3,6 +3,7 @@
 //
 
 #include "BusNode.h"
+#include "EventBus.h"
 
 mrn::BusNode::BusNode() {
   //  this->bus = bus;
@@ -17,9 +18,8 @@ std::function<void(mrn::Event)> mrn::BusNode::getNotifyFunc() {
     return eventListener;
 }
 
-void mrn::BusNode::send(mrn::Event e) {
+void mrn::BusNode::send(mrn::Event& e) {
     bus->send(e);
-
 }
 
 void mrn::BusNode::attach(mrn::EventBus *bus) {

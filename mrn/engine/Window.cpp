@@ -3,6 +3,7 @@
 //
 #include <iostream>
 #include "Window.h"
+#include "common.h"
 
 mrn::Window::Window(uint32_t width, uint32_t height) :
 width(width),
@@ -124,19 +125,22 @@ int mrn::Window::shouldClose() const {
 }
 
 void mrn::Window::frambuffer_size_callback(GLFWwindow* window, int width, int height) {
+    Window *w = static_cast<Window *>(glfwGetWindowUserPointer(window));
     glViewport(0, 0, width, height);
-    Window* w = static_cast<Window*>(glfwGetWindowUserPointer(window));
     w->width = width;
     w->height = height;
+    Event e = Event();
+    e.addData(width);
+    e.addData(height);
+    w->send(e);
 
-  //  w->send(new Event());
-
-    printf("Window Size: [%d | %d]\n", width, height);
-} //  this->conn.sendEvent();//
+}
 
 void mrn::Window::key_callback(GLFWwindow *window, int key, int scancode, int action, int mods) {
     Window* w = static_cast<Window*>(glfwGetWindowUserPointer(window));
-    w->send(Event());
+    Event e = Event();
+    e._data.push_back('w');
+    w->send(e);
     printf("Pressed: %d\n", key);
 }
 

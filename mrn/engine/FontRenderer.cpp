@@ -5,6 +5,7 @@
 #include <ext.hpp>
 #include "FontRenderer.h"
 #include "Vertex.h"
+#include "common.h"
 
 namespace mrn {
     FontRenderer::FontRenderer() {
@@ -144,7 +145,10 @@ namespace mrn {
     }
 
     void FontRenderer::onNotify(Event &e) {
-        std::cout << "FontBla";
+        uint32_t height = e.readData<uint32_t>();
+        uint32_t width = e.readData<uint32_t>();
+
+        this->projection = glm::ortho(0.0f, (float)width, 0.0f, (float)height);
     }
 
 }
