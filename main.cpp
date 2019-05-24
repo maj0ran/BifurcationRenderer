@@ -73,13 +73,15 @@ int main() {
 
 
     //////////////////////////////////////////////////////////////////////////////////
+
     const uint32_t win_width = 1200;
     const uint32_t win_height =800;
     mrn::Engine* engine = new mrn::Engine();
     engine->createWindow(win_width, win_height);
     engine->createScene();
 
-    mrn::FontRenderer* fontRenderer = new mrn::FontRenderer();
+  //  engine->attachToBus(engine->getWindow());
+  //  mrn::FontRenderer* fontRenderer = new mrn::FontRenderer();
 
 
     mrn::Shader s_default("shader/default_mvp.vert", "shader/default.frag");
@@ -102,7 +104,7 @@ int main() {
     int t = 0;
     int t_new = 0;
   //  fontRenderer->setFontSize(16);
-    fontRenderer->setFont("fonts/arial.ttf");
+    engine->getFontRenderer()->setFont("fonts/arial.ttf");
 
     // UI
     mrn::ui::Widget* settings = new mrn::ui::Widget("Settings", 0, 0, 0.5, 0.5);
@@ -113,14 +115,15 @@ int main() {
             double fps = 1 / engine->getWindow()->getDeltaTime();
             fps_str = std::to_string(fps);
         }
-        fontRenderer->renderText("FPS: " + fps_str, 0, engine->getWindow()->getHeight() - 32, vec3(1.0, 0, 0));
-        fontRenderer->renderText("Vertex Count: " + std::to_string(vis.getVertexCount()), 0, 0, vec3(1.0, 1.0, 0.0));
+        engine->getFontRenderer()->renderText("FPS: " + fps_str, 0, engine->getWindow()->getHeight() - 32, vec3(1.0, 0, 0));
+        engine->getFontRenderer()->renderText("Vertex Count: " + std::to_string(vis.getVertexCount()), 0, 0, vec3(1.0, 1.0, 0.0));
         engine->renderScene();
         engine->processInput();
         settings->render();
         // glfw: poll events & swap buffers
         // --------------------------------
         engine->getWindow()->nextFrame();
+        engine->getEventBus()->notify();
         glfwPollEvents();
     }
     return 0;

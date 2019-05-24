@@ -4,8 +4,9 @@
 
 #include "Engine.h"
 
-mrn::Engine::Engine() {
 
+mrn::Engine::Engine() {
+    eventbus = new EventBus();
 }
 
 mrn::Engine::~Engine() {
@@ -18,6 +19,9 @@ mrn::Window *mrn::Engine::getWindow() {
 
 void mrn::Engine::createWindow(uint32_t width, uint32_t height) {
     window = new Window(width, height);
+    fontRenderer = new FontRenderer();
+    window->attach(this->eventbus);
+    fontRenderer->attach(this->eventbus);
 }
 
 void mrn::Engine::createScene() {
@@ -36,3 +40,12 @@ void mrn::Engine::renderScene() {
 void mrn::Engine::processInput() {
     window->processInput(activeScene);
 }
+
+mrn::FontRenderer *mrn::Engine::getFontRenderer() {
+    return this->fontRenderer;
+}
+
+mrn::EventBus *mrn::Engine::getEventBus() {
+    return this->eventbus;
+}
+

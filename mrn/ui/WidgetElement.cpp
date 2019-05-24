@@ -12,3 +12,4 @@ x(x), y(y), width(width), height(height) {
 mrn::ui::WidgetElement::~WidgetElement() {
 
 }
+

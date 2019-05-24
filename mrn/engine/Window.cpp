@@ -43,6 +43,7 @@ deltaTime(0)
     glPointSize(3);
 
 
+
 }
 
 mrn::Window::~Window() = default;
@@ -128,10 +129,14 @@ void mrn::Window::frambuffer_size_callback(GLFWwindow* window, int width, int he
     w->width = width;
     w->height = height;
 
+  //  w->send(new Event());
+
     printf("Window Size: [%d | %d]\n", width, height);
-}
+} //  this->conn.sendEvent();//
 
 void mrn::Window::key_callback(GLFWwindow *window, int key, int scancode, int action, int mods) {
+    Window* w = static_cast<Window*>(glfwGetWindowUserPointer(window));
+    w->send(Event());
     printf("Pressed: %d\n", key);
 }
 
@@ -151,5 +156,7 @@ void mrn::Window::nextFrame() {
     lastFrameTime = currentFrameTime;
    // printf("%f\n", deltaTime);
 }
+
+void mrn::Window::onNotify(mrn::Event &e) { }
 
 

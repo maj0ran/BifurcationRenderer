@@ -6,10 +6,12 @@
 
 #include <vector>
 #include "Widget.h"
+#include "../engine/eventbus/BusNode.h"
 
 namespace mrn {
     namespace ui {
-        class Ui {
+
+        class Ui : public BusNode {
         public:
             Ui();
             ~Ui();

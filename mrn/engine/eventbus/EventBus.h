@@ -1,24 +1,25 @@
 //
-// Created by Marian Cichy
+// Created by mrn on 19/05/23.
 //
 
 #pragma once
 
-#include "BusMember.h"
-#include <vector>
+#include <functional>
+#include <queue>
+#include "Event.h"
 namespace mrn {
-
     class EventBus {
-
     public:
         EventBus();
+
         ~EventBus();
 
- //       bool addMember(mrn::BusMember *)
-
+        void addNode(std::function<void (Event)> node);
+        void send(Event e);
+        void notify();
     private:
-
-    std::vector<BusMember*> members;
+        std::vector<std::function<void (Event)>> nodes;
+        std::queue<Event> events;
 
     };
 

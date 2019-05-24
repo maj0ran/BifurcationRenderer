@@ -7,10 +7,11 @@
 #include <glad/glad.h>
 #include <glfw3.h>
 #include "Scene.h"
+#include "eventbus/BusNode.h"
 
 namespace mrn {
 
-    class Window {
+    class Window : public BusNode {
     private:
         GLFWwindow* window;
 
@@ -43,8 +44,8 @@ namespace mrn {
         int shouldClose() const;
 
         void nextFrame();
-
-
+    private:
+        void onNotify(Event &e) override;
 
  //       Scene* activeScene;
  //       void framebuffer_size_callback(GLFWwindow* window, int width, int height);

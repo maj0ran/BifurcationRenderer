@@ -143,4 +143,8 @@ namespace mrn {
         glDisable(GL_BLEND);
     }
 
+    void FontRenderer::onNotify(Event &e) {
+        std::cout << "FontBla";
+    }
+
 }

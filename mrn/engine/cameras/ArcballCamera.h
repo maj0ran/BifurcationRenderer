@@ -5,7 +5,7 @@
 #pragma once
 #include <glm.hpp>
 #include <gtc/matrix_transform.hpp>
-#include "../eventbus/BusMember.h"
+// #include "../eventbus/BusMember.h"
 
 namespace mrn {
     class ArcballCamera {
@@ -29,7 +29,7 @@ namespace mrn {
         float phi = 0;
 
 
-        BusMember busComm;
+     //   BusMember busComm;
     };
 
 }

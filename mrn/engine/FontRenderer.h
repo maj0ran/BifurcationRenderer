@@ -14,6 +14,7 @@
 #include <map>
 #include FT_FREETYPE_H
 #include "Shader.h"
+#include "eventbus/BusNode.h"
 
 namespace mrn {
     struct Character {
@@ -23,7 +24,7 @@ namespace mrn {
         long advance;
     };
 
-    class FontRenderer {
+    class FontRenderer : public BusNode {
     public:
         FontRenderer();
         ~FontRenderer();
@@ -45,6 +46,8 @@ namespace mrn {
         unsigned int cur_size = 32;
 
         void loadCharacters();
+
+        void onNotify(Event &e) override;
 
     };
 

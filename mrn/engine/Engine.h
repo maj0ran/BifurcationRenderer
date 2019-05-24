@@ -6,6 +6,7 @@
 
 #include "Window.h"
 #include "eventbus/EventBus.h"
+#include "FontRenderer.h"
 
 namespace mrn {
     class Engine {
@@ -20,8 +21,11 @@ namespace mrn {
 
         mrn::Window* getWindow();
         mrn::Scene* getScene();
+        mrn::FontRenderer* getFontRenderer();
+        mrn::EventBus* getEventBus();
 
         bool createShader(const char* vertexPath, const char* fragmentPath);
+
 
 
 
@@ -29,6 +33,7 @@ namespace mrn {
         mrn::Window *window;
         mrn::EventBus *eventbus;
         mrn::Scene *activeScene;
+        mrn::FontRenderer *fontRenderer;
 
     };
 
