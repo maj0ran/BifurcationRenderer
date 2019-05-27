@@ -5,10 +5,11 @@
 #pragma once
 #include <glm.hpp>
 #include <gtc/matrix_transform.hpp>
+#include "../eventbus/BusNode.h"
 // #include "../eventbus/BusMember.h"
 
 namespace mrn {
-    class ArcballCamera {
+    class ArcballCamera : public BusNode {
     public:
         ArcballCamera(float phi, float theta, float distance, glm::vec3 target);
         ~ArcballCamera();
@@ -28,8 +29,12 @@ namespace mrn {
         float theta = 0; // XZ
         float phi = 0;
 
+    private:
+        float camSpeed = 60.0;
+        float zoomSpeed = 20.0;
+        void onNotify(Event& e) override;
 
-     //   BusMember busComm;
+
     };
 
 }

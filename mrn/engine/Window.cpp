@@ -70,39 +70,42 @@ void mrn::Window::processInput(Scene* scene) {
         glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
     }
 
-    // camera control
-    float camSpeed = 60.0;
-    float zoomSpeed = 15.0;
-    if(glfwGetKey(window, GLFW_KEY_W)) {
-        scene->cam.theta -= glm::radians(camSpeed * deltaTime);
-        if(scene->cam.theta < 0.01) {
-            scene->cam.theta = 0.01;
-        }
+    if(glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
+        Event e = Event(KEY_W);
+        e.addData(&deltaTime);
+        send(e);
     }
 
-    if(glfwGetKey(window, GLFW_KEY_S)) {
-        scene->cam.theta += glm::radians(camSpeed * deltaTime);
-
-        if(scene->cam.theta > glm::pi<float>() - 0.01f) {
-            scene->cam.theta = glm::pi<float>() - 0.01f;
-        }
+    if(glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
+        Event e = Event(KEY_S);
+        e.addData(&deltaTime);
+        send(e);
     }
 
-    if(glfwGetKey(window, GLFW_KEY_A)) {
-        scene->cam.phi += glm::radians(camSpeed * deltaTime);
+    if(glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
+        Event e = Event(KEY_A);
+        e.addData(&deltaTime);
+        send(e);
     }
 
-    if(glfwGetKey(window, GLFW_KEY_D)) {
-        scene->cam.phi -= glm::radians(camSpeed * deltaTime);
+    if(glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
+        Event e = Event(KEY_D);
+        e.addData(&deltaTime);
+        send(e);
     }
 
-    if(glfwGetKey(window, GLFW_KEY_Z)) {
-        scene->cam.distance -= zoomSpeed * deltaTime;
+    if(glfwGetKey(window, GLFW_KEY_X) == GLFW_PRESS) {
+        Event e = Event(KEY_X);
+        e.addData(&deltaTime);
+        send(e);
     }
 
-    if(glfwGetKey(window, GLFW_KEY_X)) {
-        scene->cam.distance += zoomSpeed * deltaTime;
+    if(glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS) {
+        Event e = Event(KEY_Z);
+        e.addData(&deltaTime);
+        send(e);
     }
+
 }
 
 
@@ -129,19 +132,21 @@ void mrn::Window::frambuffer_size_callback(GLFWwindow* window, int width, int he
     glViewport(0, 0, width, height);
     w->width = width;
     w->height = height;
-    Event e = Event();
-    e.addData(width);
-    e.addData(height);
+    ScreenSize size = { .width = width, .height = height};
+
+    Event e = Event(WINDOW_RESIZE);
+    e.addData(&size);
     w->send(e);
 
 }
 
 void mrn::Window::key_callback(GLFWwindow *window, int key, int scancode, int action, int mods) {
+    static int lastAction = 0;
     Window* w = static_cast<Window*>(glfwGetWindowUserPointer(window));
-    Event e = Event();
-    e._data.push_back('w');
+    Event e = Event(KEY_PRESSED);
+    KeyEvent keyPress = { .key = key, .scancode = scancode, .action = action, .mods = mods };
+    e.addData(&keyPress);
     w->send(e);
-    printf("Pressed: %d\n", key);
 }
 
 void mrn::Window::setPolygonMode(short mode) {
@@ -158,7 +163,6 @@ void mrn::Window::nextFrame() {
     currentFrameTime = glfwGetTime();
     deltaTime = currentFrameTime - lastFrameTime;
     lastFrameTime = currentFrameTime;
-   // printf("%f\n", deltaTime);
 }
 
 void mrn::Window::onNotify(mrn::Event &e) { }

@@ -14,7 +14,7 @@ mrn::BusNode::BusNode() {
 mrn::BusNode::~BusNode() = default;
 
 std::function<void(mrn::Event)> mrn::BusNode::getNotifyFunc() {
-    std::function<void(mrn::Event)> eventListener = [=](Event e) -> void { this->onNotify(e); };
+    std::function<void(mrn::Event)> eventListener = [this](Event e) -> void { this->onNotify(e); };
     return eventListener;
 }
 

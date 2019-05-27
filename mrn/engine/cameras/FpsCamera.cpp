@@ -32,7 +32,7 @@ namespace mrn {
         // create camera-up from camera-right and camera-front
         this->up = normalize(cross(this->right, this->front));
 
-        // TODO: better Pre-Calculate the projection matrix because it doesn't change all the time (only when we change fov and screensize)
+        // TODO: better Pre-Calculate the projection matrix because it doesn't change all the time (only when we change fov and ScreenSize)
         projection = perspective(radians(this->fov), 800.0f / 600.0f, 0.1f, 100.0f);
     }
 

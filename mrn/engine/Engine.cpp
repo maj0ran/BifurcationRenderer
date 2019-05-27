@@ -22,10 +22,12 @@ void mrn::Engine::createWindow(uint32_t width, uint32_t height) {
     fontRenderer = new FontRenderer();
     window->attach(this->eventbus);
     fontRenderer->attach(this->eventbus);
+
 }
 
 void mrn::Engine::createScene() {
     this->activeScene = new Scene();
+    activeScene->cam.attach(this->eventbus);
 }
 
 mrn::Scene *mrn::Engine::getScene() {

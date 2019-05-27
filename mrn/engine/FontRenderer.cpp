@@ -145,10 +145,19 @@ namespace mrn {
     }
 
     void FontRenderer::onNotify(Event &e) {
-        uint32_t height = e.readData<uint32_t>();
-        uint32_t width = e.readData<uint32_t>();
+        switch(e.getType()) {
+            case WINDOW_RESIZE: {
+                ScreenSize size = e.readData<ScreenSize>();
+                this->projection = glm::ortho(0.0f, (float) size.width, 0.0f, (float) size.height);
+                break;
+            }
+            default:
+                break;
 
-        this->projection = glm::ortho(0.0f, (float)width, 0.0f, (float)height);
+        }
+
+
+
     }
 
 }

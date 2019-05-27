@@ -7,27 +7,31 @@
 #include <vector>
 #include <cstdint>
 #include "../common.h"
+#include "EventTypes.h"
 
 namespace mrn {
     class Event {
     public:
-        Event();
+        Event(EventType type);
         ~Event();
 
+        const EventType getType() const;
+
         template <typename T>
-        void addData(T data) {
+        void addData(T* data) {
             auto bytedata = toBytes(data);
-            this->_data.insert(this->_data.end(),  bytedata.begin(), bytedata.end());
+            this->_data.insert(this->_data.end(),  bytedata, bytedata + sizeof(T));
         }
 
         template <typename T>
         T readData() {
-            std::vector<unsigned char> data = std::vector<unsigned char>(_data.end() - sizeof(T), _data.end());
+            T result = fromBytes<T>(&_data[_data.size() - sizeof(T)]);
             _data.erase(_data.end() - sizeof(T), _data.end());
-            return fromBytes<T>(data);
+            return result;
         }
-
+    private:
         std::vector<unsigned char> _data;
+        EventType type;
     };
 
 }

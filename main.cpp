@@ -27,21 +27,15 @@
 #include <glm.hpp>
 #include <ext.hpp>
 
-void processInput(GLFWwindow *window, mrn::Scene* scene) {
-
-
-}
-
 int main() {
 
-    unsigned int a = 0b10010110101011110001110001011010;
-    auto v = toBytes(a);
-    unsigned int b = fromBytes<int>(v);
+    int a = 65539;
+    auto v = toBytes(&a);
+    int b = fromBytes<int>(v);
 
-    uint32_t c = 939;
-    auto v2 = toBytes(c);
-    uint32_t d = fromBytes<uint32_t>(v2);
-
+    ScreenSize c = ScreenSize { 1024, 768};
+    auto w = toBytes(&c);
+    ScreenSize d = fromBytes<ScreenSize>(w);
     mrn::P solver = mrn::P();
 //    solver.calc();
 
@@ -85,14 +79,10 @@ int main() {
     //////////////////////////////////////////////////////////////////////////////////
 
     const uint32_t win_width = 1200;
-    const uint32_t win_height =800;
+    const uint32_t win_height = 800;
     mrn::Engine* engine = new mrn::Engine();
     engine->createWindow(win_width, win_height);
     engine->createScene();
-
-  //  engine->attachToBus(engine->getWindow());
-  //  mrn::FontRenderer* fontRenderer = new mrn::FontRenderer();
-
 
     mrn::Shader s_default("shader/default_mvp.vert", "shader/default.frag");
 
@@ -132,8 +122,8 @@ int main() {
         settings->render();
         // glfw: poll events & swap buffers
         // --------------------------------
-        engine->getWindow()->nextFrame();
         engine->getEventBus()->notify();
+        engine->getWindow()->nextFrame();
         glfwPollEvents();
     }
     return 0;
