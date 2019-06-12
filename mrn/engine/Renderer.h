@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "Renderable.h"
+#include "Mesh.h"
 namespace mrn {
     class Renderer {
     public:
@@ -12,7 +12,7 @@ namespace mrn {
 
         ~Renderer();
 
-        void writeToVRAM(Renderable *data);
+        void writeToVRAM(Mesh *data);
 
         GLuint vao;
         GLuint vbo;

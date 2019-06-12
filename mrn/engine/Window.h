@@ -5,7 +5,7 @@
 #pragma once
 
 #include <glad/glad.h>
-#include <glfw3.h>
+#include <GLFW/glfw3.h>
 #include "Scene.h"
 #include "eventbus/BusNode.h"
 
@@ -33,7 +33,7 @@ namespace mrn {
         double getDeltaTime();
         void processInput(Scene *scene);
 
-
+        GLFWwindow* getGlfwWindowPtr();
 
         void eventLoop();
 

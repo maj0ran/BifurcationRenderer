@@ -41,5 +41,27 @@ namespace mrn {
         return vertex_data->vertices.size();
     }
 
+    void Model::initBuf() {
+        glGenVertexArrays(1, &this->vao);
+        glBindVertexArray(this->vao);
+
+        glGenBuffers(1, &this->vbo);
+        glBindBuffer(GL_ARRAY_BUFFER, vbo);
+        glBufferData(GL_ARRAY_BUFFER, getVertexCount() * sizeof(mrn::Vertex), &this->vertex_data->vertices[0], GL_STATIC_DRAW);
+
+        glGenBuffers(1, &this->ebo);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, vertex_data->indices.size() * sizeof(uint32), &vertex_data->indices[0], GL_STATIC_DRAW);
+
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)offsetof(Vertex, rgb));
+        glEnableVertexAttribArray(0);
+        glEnableVertexAttribArray(1);
+    }
+
+    void Model::bind() {
+        glBindVertexArray(this->vao);
+    }
+
 }
 

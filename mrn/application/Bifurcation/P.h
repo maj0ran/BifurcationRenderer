@@ -2,11 +2,10 @@
 // Created by Marian Cichy
 //
 
-#ifndef BIFURCATIONRENDERER_P_H
-#define BIFURCATIONRENDERER_P_H
+#pragma once
 
-#include <vec3.hpp>
 
+#include <vector>
 
 namespace mrn {
 
@@ -52,9 +51,9 @@ namespace mrn {
     class P {
     public:
         Point2D p;
-        parameterSet parameter = {.k=0.2, .B0=0.2, .B=0.4};
+        parameterSet parameter = {.k=0.1, .B0=0.2, .B=0.4};
         double h = 0.1;
-        double x[2] = {0.98720931,1.14311277}; // vertical
+        double x[2] = {0.98720931,1.14311277}; // initial value
         double t = 0;
         const double iterations = 10000;
 
@@ -62,9 +61,11 @@ namespace mrn {
         ~P();
         void calc();
         Point2D rungeKutta(Point2D p, parameterSet& para, double stepSize, double& time);
+        Point2D newton();
         Point2D duffing(Point2D p, parameterSet& para, double t);
+
+        std::vector<Point2D> result;
+        std::vector<Point2D> fixpoints;
     };
 }
 
-
-#endif //BIFURCATIONRENDERER_P_H

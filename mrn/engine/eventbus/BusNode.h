@@ -19,7 +19,7 @@ namespace mrn {
         std::function<void (Event)> getNotifyFunc();
         void send(Event& e);
 
-        virtual void onNotify(Event &e) { std::cout << "Event Received" << std::endl; };
+        virtual void onNotify(Event &e) = 0;
     };
 
 

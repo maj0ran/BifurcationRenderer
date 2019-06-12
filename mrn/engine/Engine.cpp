@@ -4,8 +4,8 @@
 
 #include "Engine.h"
 
-
 mrn::Engine::Engine() {
+
     eventbus = new EventBus();
 }
 

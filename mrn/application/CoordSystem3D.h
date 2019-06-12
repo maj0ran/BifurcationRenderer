@@ -35,7 +35,7 @@ namespace mrn {
 
 
     /*** Class that represents the whole Grid ***/
-    class CoordSystem3D : public Renderable {
+    class CoordSystem3D : public Mesh {
     public:
         CoordSystem3D();
         ~CoordSystem3D();

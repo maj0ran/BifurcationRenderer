@@ -1,5 +1,4 @@
 #include <cmath>
-#include <glfw3.h>
 
 //
 // Created by Marian Cichy
@@ -35,14 +34,7 @@ void mrn::ArcballCamera::update() {
     position.z = glm::sin(theta) * glm::sin(phi) * distance;
 }
 
-void move() {
-    int up, down, left, right;
-    int zoomIn, zoomOut;
 
-    if (up == KEY_PRESSED) {
-
-    }
-}
 
 void mrn::ArcballCamera::onNotify(mrn::Event &e) {
     switch (e.getType()) {

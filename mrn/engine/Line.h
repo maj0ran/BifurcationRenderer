@@ -6,10 +6,10 @@
 
 #include <glad/glad.h>
 #include "Vertex.h"
-#include "Renderable.h"
+#include "Mesh.h"
 
 namespace mrn {
-    class Line : public Renderable {
+    class Line : public Mesh {
     public:
         Line();
         ~Line();

@@ -7,7 +7,6 @@
 #include <string>
 
 #include <glad/glad.h>
-#include <glfw3.h>
 #include <glm.hpp>
 #include <ft2build.h>
 

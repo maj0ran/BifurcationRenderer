@@ -1,11 +1,12 @@
 cmake_minimum_required(VERSION 3.13)
 project(BifurcationRenderer)
 
-set(CMAKE_CXX_STANDARD 17)
-
+set(CMAKE_CXX_STANDARD 14)
+#SET(CMAKE_XXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
+#SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -pthread")
 # GLFW
 add_subdirectory(3rdparty/glfw-3.3)
-include_directories(3rdparty/glfw-3.3/include/GLFW)
+include_directories(3rdparty/glfw-3.3/include/)
 
 # GLM
 # GLM is header-only so no compiling needed
@@ -16,24 +17,32 @@ include_directories(3rdparty/glad/include)
 
 #stb_image
 include_directories(3rdparty/stb)
-#Freetype
 
+#Freetype
 add_subdirectory(3rdparty/freetype-2.10.0)
 include_directories(3rdparty/freetype-2.10.0/include)
+
+#dear-imgui
+include_directories(3rdparty/imgui)
+
 # Compilation and Linking
 set(SOURCES main.cpp
         3rdparty/glad/src/glad.c
+        3rdparty/imgui/imgui.cpp
+        3rdparty/imgui/imgui_widgets.cpp
+        3rdparty/imgui/imgui_draw.cpp
+        3rdparty/imgui/imgui_impl_glfw.cpp
+        3rdparty/imgui/imgui_impl_opengl3.cpp
         mrn/engine/Window.cpp
         mrn/engine/FontRenderer.cpp
         mrn/engine/Shader.cpp
-        mrn/engine/Mesh.cpp
         mrn/engine/Model.cpp
         mrn/engine/Scene.cpp
         mrn/engine/cameras/FpsCamera.cpp
         mrn/application/CoordSystem3D.cpp
         mrn/application/CoordSystem3D.h
         mrn/engine/Line.cpp mrn/engine/Line.h
-        mrn/engine/Renderable.cpp mrn/engine/Renderable.h
+        mrn/engine/Mesh.cpp mrn/engine/Mesh.h
         mrn/engine/Renderer.cpp mrn/engine/Renderer.h
         mrn/engine/common.h
         mrn/engine/cameras/ArcballCamera.cpp
@@ -41,7 +50,7 @@ set(SOURCES main.cpp
         mrn/engine/Primitives.cpp
         mrn/MathSolver.cpp mrn/MathSolver.h
         mrn/engine/cameras/Camera.cpp mrn/engine/cameras/Camera.h
-        mrn/engine/Engine.cpp mrn/engine/Engine.h mrn/application/Bifurcation/P.cpp mrn/application/Bifurcation/P.h mrn/ui/Widget.cpp mrn/ui/Widget.h mrn/ui/Ui.cpp mrn/ui/Ui.h mrn/ui/Label.cpp mrn/ui/Label.h mrn/ui/WidgetElement.cpp mrn/ui/WidgetElement.h mrn/engine/eventbus/Event.cpp mrn/engine/eventbus/Event.h mrn/engine/eventbus/EventBus.cpp mrn/engine/eventbus/EventBus.h mrn/engine/eventbus/BusNode.cpp mrn/engine/eventbus/BusNode.h mrn/engine/eventbus/EventTypes.h)
+        mrn/engine/Engine.cpp mrn/engine/Engine.h mrn/application/Bifurcation/P.cpp mrn/application/Bifurcation/P.h mrn/engine/eventbus/Event.cpp mrn/engine/eventbus/Event.h mrn/engine/eventbus/EventBus.cpp mrn/engine/eventbus/EventBus.h mrn/engine/eventbus/BusNode.cpp mrn/engine/eventbus/BusNode.h mrn/engine/eventbus/EventTypes.h mrn/application/Interface.cpp mrn/application/Interface.h mrn/application/Bifurcation/Gauss.cpp mrn/application/Bifurcation/Gauss.h mrn/application/Bifurcation/DataReader.cpp mrn/application/Bifurcation/DataReader.h mrn/engine/Triangle.cpp)
 
 
 add_executable(${PROJECT_NAME} ${SOURCES})

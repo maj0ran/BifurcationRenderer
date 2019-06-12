@@ -4,6 +4,7 @@
 #include <iostream>
 #include "Window.h"
 #include "common.h"
+#include <GLFW/glfw3.h>
 
 mrn::Window::Window(uint32_t width, uint32_t height) :
 width(width),
@@ -32,11 +33,11 @@ deltaTime(0)
     glfwSetFramebufferSizeCallback(window, frambuffer_size_callback);
     glfwSetKeyCallback(window, key_callback);
 
-
-    if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-        std::cout << "Failed to initialize GLAD" << std::endl;
-        glfwTerminate();
-    }
+    gladLoadGL();
+ //   if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+ //       std::cout << "Failed to initialize GLAD" << std::endl;
+ //       glfwTerminate();
+ //   }
 
     glViewport(0, 0, width, height);
     glEnable(GL_DEPTH_TEST);
@@ -166,5 +167,9 @@ void mrn::Window::nextFrame() {
 }
 
 void mrn::Window::onNotify(mrn::Event &e) { }
+
+GLFWwindow *mrn::Window::getGlfwWindowPtr() {
+    return window;
+}
 
 

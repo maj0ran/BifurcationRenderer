@@ -14,7 +14,7 @@ namespace mrn {
 
     }
 
-    void Renderer::writeToVRAM(Renderable *data) {
+    void Renderer::writeToVRAM(Mesh *data) {
 
     }
 

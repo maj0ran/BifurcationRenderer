@@ -17,7 +17,7 @@ namespace mrn {
         ~Model();
 
         Shader* shader;
-        Renderable* vertex_data;
+        Mesh* vertex_data;
         GLuint vertex_array_id;
 
         void translate(float x, float y, float z);
@@ -25,6 +25,8 @@ namespace mrn {
 
         void attachShader(Shader* shader);
 
+        void initBuf();
+        void bind();
         mat4 getTranslationMat();
         size_t  getVertexCount();
     private:
@@ -35,6 +37,11 @@ namespace mrn {
         mat4 trans_mat;
         mat4 rot_mat;
         mat4 scale_mat;
+
+    protected:
+        GLuint vao;
+        GLuint vbo;
+        GLuint ebo;
     };
 
 }

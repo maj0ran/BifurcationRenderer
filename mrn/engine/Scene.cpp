@@ -3,14 +3,13 @@
 //
 
 #include "Scene.h"
-#include <glfw3.h>
 #include <ext.hpp>
 
 namespace mrn {
 
     Scene::Scene() : cam(glm::half_pi<float>(),
                          glm::half_pi<float>(),
-                         20.0f, vec3(0.0f, 2.0f, 0.0f)) {
+                         1.0f, vec3(0.0f, 0.0f, 0.0f)) {
         objects = std::vector<Model>();
     }
 
@@ -34,7 +33,7 @@ namespace mrn {
             glUniformMatrix4fv(view_loc, 1, GL_FALSE, value_ptr(cam.getViewMatrix()));
             glUniformMatrix4fv(proj_loc, 1, GL_FALSE, value_ptr(cam.projection));
 
-            o.vertex_data->bind();
+            o.bind();
             if(o.vertex_data->use_indices)
                 glDrawElements(GL_TRIANGLES, o.vertex_data->indices.size(), GL_UNSIGNED_INT, 0);
             else

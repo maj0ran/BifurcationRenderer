@@ -1,11 +1,15 @@
 #include <iostream>
 
-
+#include <imgui.h>
+#include <examples/imgui_impl_glfw.h>
+#include <examples/imgui_impl_opengl3.h>
 #include <glad/glad.h>
-#include <glfw3.h>
+#include <GLFW/glfw3.h>
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
+
+#include <cmath>
 
 #include "mrn/engine/Engine.h"
 
@@ -19,65 +23,15 @@
 #include "mrn/engine/Primitives.h"
 #include "mrn/MathSolver.h"
 #include "mrn/application/Bifurcation/P.h"
-#include "mrn/ui/Widget.h"
-#include "mrn/ui/WidgetElement.h"
 #include "mrn/engine/common.h"
+#include "mrn/application/Interface.h"
+#include "mrn/application/Bifurcation/DataReader.h"
 
 #include <gtc/matrix_transform.hpp>
 #include <glm.hpp>
 #include <ext.hpp>
 
 int main() {
-
-    int a = 65539;
-    auto v = toBytes(&a);
-    int b = fromBytes<int>(v);
-
-    ScreenSize c = ScreenSize { 1024, 768};
-    auto w = toBytes(&c);
-    ScreenSize d = fromBytes<ScreenSize>(w);
-    mrn::P solver = mrn::P();
-//    solver.calc();
-
-    MathSolver m = MathSolver();
-
-    std::vector<std::array<float, 3>> result = m.solve();
-
-    int row_length = 40;
-
-    mrn::Mesh mesh = mrn::Mesh();
-    for(int y = 0; y < 40; y++) {
-        for(int x = 0; x < 40; x++) {
-               mrn::Vertex v;
-               v.pos = vec3(result[x + y * row_length][0], result[x + y * row_length][1], result[x + y * row_length][2]);
-               v.rgb = vec3(1.0 - (result[x + y * row_length][1] / 8.0), result[x + y * row_length][1] / 8.0, 0.0);
-               mesh.vertices.push_back(v);
-        }
-    }
-
-    for(uint32 k = 0; k < result.size() - row_length - 1; k++) {
-        if(((k + 1) % row_length) == 0)
-            k++;
-        uint32 i1 = k;
-        uint32 i2 = k + 1;
-        uint32 i3 = k + row_length;
-
-        uint32 j1 = k + 1;
-        uint32 j2 = k + row_length;
-        uint32 j3 = (k + 1) + row_length;
-
-        mesh.indices.push_back(i1);
-        mesh.indices.push_back(i2);
-        mesh.indices.push_back(i3);
-        mesh.indices.push_back(j1);
-        mesh.indices.push_back(j2);
-        mesh.indices.push_back(j3);
-    }
-
-
-
-    //////////////////////////////////////////////////////////////////////////////////
-
     const uint32_t win_width = 1200;
     const uint32_t win_height = 800;
     mrn::Engine* engine = new mrn::Engine();
@@ -86,45 +40,209 @@ int main() {
 
     mrn::Shader s_default("shader/default_mvp.vert", "shader/default.frag");
 
-    mrn::Model vis = mrn::Model();
-    vis.vertex_data = &mesh;
-    vis.shader = &s_default;
-    mesh.initBuf();
-    engine->getScene()->addSceneNode(vis);
+    mrn::P solver = mrn::P();
+    solver.calc();
+    glLineWidth(1);
+
+    mrn::Mesh* duffing = new mrn::Mesh();
+    for(int i = 0;  i < solver.result.size(); i++) {
+        float x = solver.result[i].x;
+        float y = solver.result[i].y;
+    //    printf("%f %f\n", solver.result[i].x, solver.result[i].y);
+        mrn::Vertex v;
+        v.pos = vec3(x, y, 0);
+        v.rgb = RED;
+        duffing->addVertex(v);
+
+    }
+
+    mrn::Model duffingModel = mrn::Model();
+    duffingModel.vertex_data = duffing;
+    duffingModel.shader = &s_default;
+    duffingModel.initBuf();
+
+    mrn::Mesh* fixedPoints = new mrn::Mesh();
+    for(int i = 0; i < solver.fixpoints.size(); i++) {
+        float x = solver.fixpoints[i].x;
+        float y = solver.result[i].y;
+        mrn::Vertex v;
+        v.pos = vec3(x, y, 0);
+        v.rgb = BLUE;
+        fixedPoints->addVertex(v);
+    }
+
+    mrn::Model fixedPointModel = mrn::Model();
+    fixedPointModel.vertex_data = fixedPoints;
+    fixedPointModel.shader = &s_default;
+    fixedPointModel.initBuf();
+
+
+
+
+    //////////////////////////////////////////////////////////////////////////////////
+
 
 
     mrn::Model grid = mrn::Model();
     mrn::CoordSystem3D coord_sys = mrn::CoordSystem3D();
-    coord_sys.initBuf();
     grid.vertex_data = &coord_sys;
     grid.shader = &s_default;
+    grid.initBuf();
 
     engine->getScene()->addSceneNode(grid);
-    std::string fps_str;
-    int t = 0;
-    int t_new = 0;
+
   //  fontRenderer->setFontSize(16);
     engine->getFontRenderer()->setFont("fonts/arial.ttf");
 
     // UI
-    mrn::ui::Widget* settings = new mrn::ui::Widget("Settings", 0, 0, 0.5, 0.5);
-    while(!engine->getWindow()->shouldClose()) {
-        t = (int)glfwGetTime();
-        if(t > t_new) {
-            t_new = t;
-            double fps = 1 / engine->getWindow()->getDeltaTime();
-            fps_str = std::to_string(fps);
+    Interface* interface = new Interface(engine->getWindow()->getGlfwWindowPtr());
+    ImGuiIO& io = ImGui::GetIO();
+    const float font_size = 18;
+    io.Fonts->AddFontFromFileTTF("fonts/consola.ttf", font_size);
+    // Render Loop
+    float k = 0.2;
+    float B = 0.2;
+    float B0 = 0.4;
+    float stepsize = 0.01;
+
+    ImGui::StyleColorsLight();
+
+    vector<const char*> filenames;
+    filenames.push_back("data/i_1_k=0.2");
+    filenames.push_back("data/i_1_k=0.205");
+    DataReader data  = DataReader();
+
+
+    auto duffing_data = data.read(filenames);
+    for(int i = 0; i < duffing_data.size(); i++) {
+        for(int j = 0; j < duffing_data[0].size(); j++) {
+            for(int k = 0; k < duffing_data[0][0].size(); k++) {
+                printf("%f ", duffing_data[i][j][k]);
+            }
+            printf("\n");
         }
-        engine->getFontRenderer()->renderText("FPS: " + fps_str, 0, engine->getWindow()->getHeight() - 32, vec3(1.0, 0, 0));
-        engine->getFontRenderer()->renderText("Vertex Count: " + std::to_string(vis.getVertexCount()), 0, 0, vec3(1.0, 1.0, 0.0));
+        printf("\n-----------------\n");
+    }
+    mrn::Mesh duffMesh;
+    for(int i = 0; i < duffing_data[0].size(); i++) {
+        mrn::Vertex v;
+        v.pos = vec3(0.0, duffing_data[0][i][0], duffing_data[0][i][1]);
+        v.rgb = RED;
+        duffMesh.addVertex(v);
+    }
+
+
+    for(int i = 0; i < duffing_data[1].size(); i++) {
+        mrn::Vertex v;
+        v.pos = vec3(0.005, duffing_data[1][i][0], duffing_data[1][i][1]);
+        v.rgb = GREEN;
+        duffMesh.addVertex(v);
+    }
+
+
+
+
+    for (int i = 0; i < duffMesh.vertices.size() - 1; ++i) {
+        if(abs(duffMesh.vertices[i + 1].pos.x - 0.0) > 0.001) {
+            printf("%f\n", duffMesh.vertices[i].pos.x);
+            break;
+        }
+        // we select 2 neighboring points on the current K-Layer
+        uint32_t p1 = i;
+        uint32_t p2 = i + 1;
+        // then we search for the nearest point on the K+1-Layer
+        uint32_t p3 = 0;
+        uint32_t p4 = 0;
+        double d = std::numeric_limits<double>::infinity();
+        for (int j = 0; j < duffMesh.vertices.size(); ++j) {
+            if (abs(duffMesh.vertices[j].pos.x - 0.005) < 0.001) {
+                double d_current = sqrt
+                        (pow(duffMesh.vertices[p1].pos.y - duffMesh.vertices[j].pos.y, 2) +
+                         pow(duffMesh.vertices[p1].pos.z - duffMesh.vertices[j].pos.z, 2));
+                if (d_current < d) {
+                    d = d_current;
+                    p3 = j;
+                }
+            }
+        }
+        d = std::numeric_limits<double>::infinity();
+        for (int j = 0; j < duffMesh.vertices.size(); ++j) {
+            if (abs(duffMesh.vertices[j].pos.x - 0.005) < 0.001) {
+                double d_current = sqrt
+                        (pow(duffMesh.vertices[p2].pos.y - duffMesh.vertices[j].pos.y, 2) +
+                         pow(duffMesh.vertices[p2].pos.z - duffMesh.vertices[j].pos.z, 2));
+                if (d_current < d && j != p3) {
+                    d = d_current;
+                    p4 = j;
+                }
+            }
+        }
+        duffMesh.addTriangleIndices(p1, p2, p3);
+        vec3 n1 = vec3(cross(duffMesh.vertices[p1].pos, duffMesh.vertices[p2].pos));
+        duffMesh.addTriangleIndices(p2, p3, p4);
+    }
+
+    duffMesh.use_indices = true;
+
+    mrn::Model duffModel;
+    duffModel.vertex_data = &duffMesh;
+    duffModel.shader = &s_default;
+    duffModel.initBuf();
+    engine->getScene()->addSceneNode(duffModel);
+
+    while(!engine->getWindow()->shouldClose()) {
+    //    bifModel_k02.bind();
+    //   glDrawArrays(GL_LINE_STRIP, 0, bifModel_k02.getVertexCount());
+    //    bifModel_k0205.bind();
+    //    glDrawArrays(GL_LINE_STRIP, 0, bifModel_k0205.getVertexCount());
+    //   duffModel.bind();
+      //  glDrawArrays(GL_LINE_STRIP, 0, duffModel.getVertexCount());
         engine->renderScene();
         engine->processInput();
-        settings->render();
+        // BEGIN GUI
+        interface->startFrame();
+        ImGui::SetNextWindowPos(ImVec2(0, 0));
+        ImGui::SetNextWindowSize(ImVec2(400, 170));
+        ImGui::Begin("Settings:");
+        ImGui::Text("k:  ");
+        ImGui::SameLine();
+        ImGui::InputFloat("##k",&k);
+        ImGui::SameLine();
+        if(ImGui::Button("<<##k_dec")) { k -= stepsize; }
+        ImGui::SameLine();
+        if(ImGui::Button(">>##k_inc")) { k += stepsize; }
+
+        ImGui::Text("B:  ");
+        ImGui::SameLine();
+        ImGui::InputFloat("##B",&B);
+        ImGui::SameLine();
+        if(ImGui::Button("<<##B_dec")) { B -= stepsize; }
+        ImGui::SameLine();
+        if(ImGui::Button(">>##B_inc")) { B += stepsize; }
+
+        ImGui::Text("B0: ");
+        ImGui::SameLine();
+        ImGui::InputFloat("##B0",&B0);
+        ImGui::SameLine();
+        if(ImGui::Button("<<##B0_dec")) { B0 -= stepsize; }
+        ImGui::SameLine();
+        if(ImGui::Button(">>##B0_inc")) { B0 += stepsize; }
+
+        ImGui::Text("FPS: %.3f", ImGui::GetIO().Framerate);
+
+        ImGui::End();
+        ImGui::Render();
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+        // END GUI
+
+
         // glfw: poll events & swap buffers
         // --------------------------------
+
+        glfwPollEvents();
         engine->getEventBus()->notify();
         engine->getWindow()->nextFrame();
-        glfwPollEvents();
     }
     return 0;
 }

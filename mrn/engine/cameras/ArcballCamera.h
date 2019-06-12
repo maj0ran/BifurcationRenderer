@@ -6,7 +6,6 @@
 #include <glm.hpp>
 #include <gtc/matrix_transform.hpp>
 #include "../eventbus/BusNode.h"
-// #include "../eventbus/BusMember.h"
 
 namespace mrn {
     class ArcballCamera : public BusNode {
@@ -18,7 +17,7 @@ namespace mrn {
 
         void update();
 
-        glm::mat4 projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
+        glm::mat4 projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.01f, 100.0f);
 
 
         glm::vec3 position;
@@ -30,8 +29,8 @@ namespace mrn {
         float phi = 0;
 
     private:
-        float camSpeed = 60.0;
-        float zoomSpeed = 20.0;
+        float camSpeed = 30.0;
+        float zoomSpeed = 0.5;
         void onNotify(Event& e) override;
 
 
