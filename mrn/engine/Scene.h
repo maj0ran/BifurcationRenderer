@@ -15,7 +15,7 @@ namespace mrn {
         Scene();
         ~Scene();
         void addSceneNode(mrn::Model &model);
-        mrn::ArcballCamera cam;
+        mrn::FpsCamera cam;
 
 
         void render();

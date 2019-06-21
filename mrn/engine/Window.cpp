@@ -30,8 +30,10 @@ deltaTime(0)
     glfwMakeContextCurrent(this->window);
 
 
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     glfwSetFramebufferSizeCallback(window, frambuffer_size_callback);
     glfwSetKeyCallback(window, key_callback);
+    glfwSetCursorPosCallback(window, mouse_callback);
 
     gladLoadGL();
  //   if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
@@ -170,6 +172,24 @@ void mrn::Window::onNotify(mrn::Event &e) { }
 
 GLFWwindow *mrn::Window::getGlfwWindowPtr() {
     return window;
+}
+
+void mrn::Window::mouse_callback(GLFWwindow *window, double xpos, double ypos) {
+    static float lastX = 0, lastY = 0;
+    static float sensitivity = 0.03;
+    float xoffset = xpos - lastX;
+    float yoffset = lastY - ypos;
+    lastX = xpos;
+    lastY = ypos;
+
+    xoffset *= sensitivity;
+    yoffset *= sensitivity;
+
+    Window* w = static_cast<Window*>(glfwGetWindowUserPointer(window));
+    Event e = Event(MOUSE_MOVED);
+    MousePos pos =  {.x=xoffset, .y=yoffset };
+    e.addData(&pos);
+    w->send(e);
 }
 
 

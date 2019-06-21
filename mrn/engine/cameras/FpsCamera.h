@@ -6,6 +6,7 @@
 
 #include <glm.hpp>
 #include <glad/glad.h>
+#include "../eventbus/BusNode.h"
 
 using namespace glm;
 
@@ -17,7 +18,7 @@ enum CAMERA_COMMAND {
 };
 
 namespace mrn {
-    class FpsCamera {
+    class FpsCamera : public BusNode {
     public:
         FpsCamera(vec3 position, vec3 front);
         ~FpsCamera();
@@ -29,6 +30,8 @@ namespace mrn {
 
         float fov;
         float speed;
+        float pitch;
+        float yaw;
         mat4 getViewMatrix();
         mat4 projection;
 
@@ -39,6 +42,7 @@ namespace mrn {
     private:
         vec3 worldUp = vec3(0, 1, 0);
         void processKeyboard(CAMERA_COMMAND cmd, float deltaTime);
+        void onNotify(Event& e) override;
 
 
     };

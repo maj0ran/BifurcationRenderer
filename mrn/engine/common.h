@@ -26,6 +26,14 @@ struct KeyEvent {
     int mods;
 };
 
+struct Pos2D {
+    float x;
+    float y;
+};
+
+typedef Pos2D MousePos;
+
+
 template <typename T>
 byte* toBytes(T* data) {
     byte* result = (byte*)malloc(sizeof(T));

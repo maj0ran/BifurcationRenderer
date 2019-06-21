@@ -3,6 +3,7 @@
 enum EventType {
     NO_TYPE,
     WINDOW_RESIZE,
+    MOUSE_MOVED,
     KEY_PRESSED,
     KEY_W,
     KEY_S,

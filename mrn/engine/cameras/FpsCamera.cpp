@@ -14,9 +14,15 @@ namespace mrn {
     mrn::FpsCamera::FpsCamera(vec3 position, vec3 front) {
         this->position = position;
         this->front = front;
-        this->fov = 100;
-        this->speed = 1;
+        this->fov = 45;
+        this->speed = 0.3;
+        this->pitch = 10;
+        this->yaw = 45;
         this->update();
+
+        front.x = cos(glm::radians(pitch)) * cos(glm::radians(yaw));
+        front.y = sin(glm::radians(pitch));
+        front.z = cos(glm::radians(pitch)) * sin(glm::radians(yaw));
     }
 
     mrn::FpsCamera::~FpsCamera() = default;
@@ -27,6 +33,18 @@ namespace mrn {
     }
 
     void FpsCamera::update() {
+        if(pitch > 89.0) {
+            pitch = 89.0;
+        }
+
+        if(pitch < -89.0) {
+            pitch = -89.0;
+        }
+
+        front.x = cos(glm::radians(pitch)) * cos(glm::radians(yaw));
+        front.y = sin(glm::radians(pitch));
+        front.z = cos(glm::radians(pitch)) * sin(glm::radians(yaw));
+        front = normalize(front);
         // create camera-right from camera-front and world-up
         this->right = normalize(cross(this->front, this->worldUp));
         // create camera-up from camera-right and camera-front
@@ -37,7 +55,7 @@ namespace mrn {
     }
 
     mat4 FpsCamera::getViewMatrix() {
-        return glm::lookAt(position, vec3(0.0f,0.0f,0.0f), vec3(0.0f,1.0f,0.0f));
+        return glm::lookAt(position, position - front, worldUp);
     }
 
     void FpsCamera::processKeyboard(CAMERA_COMMAND cmd, float deltaTime) {
@@ -54,6 +72,39 @@ namespace mrn {
                 break;
             case CAM_RIGHT:
                 this->position.x += velocity;
+                break;
+        }
+    }
+
+    void FpsCamera::onNotify(Event &e) {
+        //   float veloctiy = speed *
+        switch (e.getType()) {
+            case KEY_W:
+                this->position -= this->front * (float)(this->speed * e.readData<double>());
+                break;
+            case KEY_S:
+                this->position += this->front * (float)(this->speed * e.readData<double>());
+                break;
+
+            case KEY_A:
+                this->position += normalize(cross(front, up)) * (float)(this->speed * e.readData<double>());
+                break;
+            case KEY_D:
+                this->position -= normalize(cross(front, up)) * (float)(this->speed * e.readData<double>());
+                break;
+
+            case MOUSE_MOVED: {
+                MousePos offset = e.readData<MousePos>();
+                this->yaw += offset.x;
+                this->pitch -= offset.y;
+                break;
+            }
+            case WINDOW_RESIZE: {
+                ScreenSize size = e.readData<ScreenSize>();
+                projection = perspective(radians(this->fov), (float) size.width / size.height, 0.001f, 100.0f);
+                break;
+            }
+                default:
                 break;
         }
     }

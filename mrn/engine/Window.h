@@ -22,6 +22,7 @@ namespace mrn {
 
         static void frambuffer_size_callback(GLFWwindow* window, int width, int height);
         static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
+        static void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 
         short polygon_mode = GL_FILL;
 

@@ -33,6 +33,8 @@ set(SOURCES main.cpp
         3rdparty/imgui/imgui_draw.cpp
         3rdparty/imgui/imgui_impl_glfw.cpp
         3rdparty/imgui/imgui_impl_opengl3.cpp
+        3rdparty/delaunay/delaunator.hpp
+        3rdparty/Eigen/Dense
         mrn/engine/Window.cpp
         mrn/engine/FontRenderer.cpp
         mrn/engine/Shader.cpp
@@ -50,7 +52,7 @@ set(SOURCES main.cpp
         mrn/engine/Primitives.cpp
         mrn/MathSolver.cpp mrn/MathSolver.h
         mrn/engine/cameras/Camera.cpp mrn/engine/cameras/Camera.h
-        mrn/engine/Engine.cpp mrn/engine/Engine.h mrn/application/Bifurcation/P.cpp mrn/application/Bifurcation/P.h mrn/engine/eventbus/Event.cpp mrn/engine/eventbus/Event.h mrn/engine/eventbus/EventBus.cpp mrn/engine/eventbus/EventBus.h mrn/engine/eventbus/BusNode.cpp mrn/engine/eventbus/BusNode.h mrn/engine/eventbus/EventTypes.h mrn/application/Interface.cpp mrn/application/Interface.h mrn/application/Bifurcation/Gauss.cpp mrn/application/Bifurcation/Gauss.h mrn/application/Bifurcation/DataReader.cpp mrn/application/Bifurcation/DataReader.h mrn/engine/Triangle.cpp)
+        mrn/engine/Engine.cpp mrn/engine/Engine.h mrn/application/Bifurcation/P.cpp mrn/application/Bifurcation/P.h mrn/engine/eventbus/Event.cpp mrn/engine/eventbus/Event.h mrn/engine/eventbus/EventBus.cpp mrn/engine/eventbus/EventBus.h mrn/engine/eventbus/BusNode.cpp mrn/engine/eventbus/BusNode.h mrn/engine/eventbus/EventTypes.h mrn/application/Interface.cpp mrn/application/Interface.h mrn/application/Bifurcation/Gauss.cpp mrn/application/Bifurcation/Gauss.h mrn/engine/TriangleIndex.cpp mrn/engine/TriangleIndex.h mrn/application/Bifurcation/Bifurcation.cpp mrn/application/Bifurcation/Bifurcation.h mrn/application/Bifurcation/Vertex.cpp mrn/application/Bifurcation/Vertex.h mrn/application/Bifurcation/Pivoter.cpp mrn/application/Bifurcation/Pivoter.h mrn/application/Bifurcation/Edge.cpp mrn/application/Bifurcation/Edge.h mrn/application/Bifurcation/Front.cpp mrn/application/Bifurcation/Front.h mrn/application/Bifurcation/Triangle.cpp mrn/application/Bifurcation/Triangle.h)
 
 
 add_executable(${PROJECT_NAME} ${SOURCES})
