@@ -22,25 +22,29 @@
 #include "mrn/application/CoordSystem3D.h"
 #include "mrn/engine/Primitives.h"
 #include "mrn/MathSolver.h"
-#include "mrn/application/Bifurcation/P.h"
+#include "mrn/application/Trashcan/P.h"
 #include "mrn/engine/common.h"
 #include "mrn/application/Interface.h"
 #include "mrn/application/Bifurcation/Bifurcation.h"
 #include "3rdparty/Eigen/Dense"
-#include "mrn/application/Bifurcation/Pivoter.h"
+#include "mrn/application/Bifurcation/Mesher.h"
 #include "mrn/application/Bifurcation/Triangle.h"
+#include "mrn/Debug.h"
 
 #include <gtc/matrix_transform.hpp>
 #include <glm.hpp>
 #include <ext.hpp>
+#include "mrn/application/FileIO.h"
 
+#include <vector>
+#include "mrn/application/Bifurcation/ballpivot/Mesher.h"
 int main() {
     const uint32_t win_width = 1200;
     const uint32_t win_height = 800;
     mrn::Engine* engine = new mrn::Engine();
     engine->createWindow(win_width, win_height);
     engine->createScene();
-    glPointSize(2);
+    glPointSize(6);
     mrn::Shader s_default("shader/default_mvp.vert", "shader/default.frag");
 
 
@@ -76,67 +80,81 @@ int main() {
     ImGui::StyleColorsLight();
 
     vector<const char*> filenames;
-    filenames.push_back("data/i_1_k=0.2");
-    filenames.push_back("data/i_1_k=0.205");
+    filenames.push_back("data/fixed_i1k02.txt");
+    filenames.push_back("data/fixed_i1k0205.txt");
+    filenames.push_back("data/fixed_i1k021.txt");
 
     Bifurcation bif;
     bif.read(filenames);
-    Pivoter pivoter;
-    auto sorted = pivoter.sortbyDistance(bif.bifurcationData);
-    for(int i = 0; i < sorted.size(); i++) {
-        printf("%f %f %f << %d \n", sorted[i].pos.x, sorted[i].pos.y, sorted[i].pos.z, i);
-    }
-
+    Mesher pivoter(bif.bifurcationData);
+    pivoter.reconstruct();
     mrn::Mesh bifurcationPoints;
-    for(auto p : bif.bifurcationData) {
-        mrn::Vertex v;
+    for(auto p : pivoter.getPoints()) {
+        mrn::GLVertex v;
         v.pos = {p.pos.x, p.pos.y, p.pos.z};
-        v.rgb = RED;
+        if(p.state == VERTEXSTATE_FRONT)
+            v.rgb = GREEN;
+        else if(p.state == VERTEXSTATE_ORPHAN)
+            v.rgb = PINK;
+        else if(p.state == VERTEXSTATE_INNER)
+            v.rgb = ORANGE;
         bifurcationPoints.addVertex(v);
     }
-    mrn::Model bifurcationPointsModel;
-    bifurcationPointsModel.vertex_data = &bifurcationPoints;
-    bifurcationPointsModel.shader = &s_default;
-    bifurcationPointsModel.initBuf();
-
+    mrn::Model bifurcationPointsModel(&bifurcationPoints, &s_default);
+  //  bpa::Mesher* bpa_mesher = new bpa::Mesher();
+    //bpa_mesher.
     mrn::Mesh bifurcationNormals;
+    bif.estimateNormals();
+    bif.correctNormalDirection();
+    FileIO file_io;
+    file_io.writeVertices("bif_vertices.txt", bif.bifurcationData);
+
     for(int i = 0; i < bif.bifurcationData.size(); i++) {
-        vec3 nStart(bif.bifurcationData[i].pos);
-        mrn::Vertex v1;
-        v1.pos = nStart;
-        v1.rgb = vec3(0, 1, 1);
-        bifurcationNormals.addVertex(v1);
-        vec3 normal = bif.estimateNormal(i);
-        vec3 nEnd(bif.bifurcationData[i].normal);
-        normalize(nEnd);
-        nEnd.x /= 100.0;
-        nEnd.y /= 100.0;
-        nEnd.z /= 100.0;
-        mrn::Vertex v2;
-        v2.pos = {nEnd.x + nStart.x, nEnd.y + nStart.y, nEnd.z + nStart.z};
-       // normalize(v2.pos);
-        v2.rgb = vec3(0, 1, 1);
-        bifurcationNormals.addVertex(v2);
+        mrn::GLVertex n1;
+        n1.pos = bif.bifurcationData[i].pos;
+        n1.rgb = vec3(0, 1, 1);
+        mrn::GLVertex n2;
+        n2.pos = bif.bifurcationData[i].normal + bif.bifurcationData[i].pos;
+        n2.rgb = vec3(0, 1, 1);
+        bifurcationNormals.addVertex(n1);
+        bifurcationNormals.addVertex(n2);
     }
 
-    mrn::Model bifurcationNormalsModel;
-    bifurcationNormalsModel.vertex_data = &bifurcationNormals;
-    bifurcationNormalsModel.shader = &s_default;
-    bifurcationNormalsModel.initBuf();
 
-    auto c = pivoter.circumcenter(&sorted[0], &sorted[1], &sorted[11]);
-    printf("%f %f %f :: %f",c.center.x, c.center.y, c.center.z, c.radius);
+    mrn::Model bifurcationNormalsModel(&bifurcationNormals, &s_default);
 
-    Triangle t = pivoter.findSeedTriangle(bif.bifurcationData);
-    printf("[%f %f %f :: %f %f %f :: %f %f %f\n", t.points[0].pos.x, t.points[0].pos.y, t.points[0].pos.z,
-                                                t.points[1].pos.x, t.points[1].pos.y, t.points[1].pos.z,
-                                                t.points[2].pos.x, t.points[2].pos.y, t.points[2].pos.z);
-    auto center = bif.getCentroid(bif.bifurcationData);
-    printf("%f %f %f\n", center.pos.x, center.pos.y, center.pos.z);
-    bif.correctNormalDirection();
+
+
+
 
   //  engine->getScene()->addSceneNode(duffModel);
 
+    mrn::Mesh recon;
+
+    for(Triangle& t : pivoter.reconstructedSurface->triangles()) {
+        for(Vertex* v : t.points) {
+            mrn::GLVertex glv;
+       //     printf("Vertex State: %d\n", v->state);
+            if(v->state == VERTEXSTATE_FRONT) {
+                glv = mrn::GLVertex(*v, GREEN);
+            }
+            if(v->state == VERTEXSTATE_INNER) {
+                glv = mrn::GLVertex(*v, YELLOW);
+            }
+            if(v->state == VERTEXSTATE_ORPHAN) {
+                glv = mrn::GLVertex(*v, BLUE);
+            }
+            recon.addVertex(glv);
+        }
+    }
+
+    Debug dbg = pivoter.getDebugger();
+    dbg.toVram();
+
+    mrn::Model reconModel;
+    reconModel.shader = &s_default;
+    reconModel.vertex_data = &recon;
+    reconModel.initBuf();
     while(!engine->getWindow()->shouldClose()) {
         // Bifurcation Points
         bifurcationPointsModel.bind();
@@ -146,6 +164,13 @@ int main() {
         glDrawArrays(GL_LINES, 0, bifurcationNormalsModel.getVertexCount());
         engine->renderScene();
         engine->processInput();
+
+
+        /* ---------------------------------------------- */
+        dbg.draw();
+        reconModel.bind();
+        glDrawArrays(GL_TRIANGLES, 0, reconModel.getVertexCount());
+
         // BEGIN GUI
         interface->startFrame();
         ImGui::SetNextWindowPos(ImVec2(0, 0));

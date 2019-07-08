@@ -18,18 +18,21 @@ namespace mrn {
 
     class Mesh {
     public:
+        std::vector<mrn::GLVertex> vertices;
+        std::vector<uint32> indices;
+
+
         Mesh();
         virtual ~Mesh();
 
-        void addVertex(mrn::Vertex &vertex);
+        void addVertex(mrn::GLVertex &vertex);
         void addTriangleIndices(uint32 p1, uint32 p2, uint32 p3);
         void addTriangle(TriangleIndex triangle);
 
 
         GLuint draw_type = GL_TRIANGLES;
-        bool use_indices = true;
-        std::vector<mrn::Vertex> vertices;
-        std::vector<uint32> indices;
+        bool use_indices = false;
+
         size_t getTriangleCount();
         TriangleIndex getTriangle(size_t index);
         Normal calcNormalOfTriangle(size_t index);

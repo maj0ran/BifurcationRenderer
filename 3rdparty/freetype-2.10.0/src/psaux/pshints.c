@@ -1188,10 +1188,10 @@
 
 
   /*
-   * From two line segments, (u1,u2) and (v1,v2), compute a point of
+   * From two line segments, (u1,u2) and (source,v2), compute a point of
    * intersection on the corresponding lines.
    * Return false if no intersection is found, or if the intersection is
-   * too far away from the ends of the line segments, u2 and v1.
+   * too far away from the ends of the line segments, u2 and source.
    *
    */
   static FT_Bool
@@ -1205,7 +1205,7 @@
     /*
      * Let `u' be a zero-based vector from the first segment, `v' from the
      * second segment.
-     * Let `w 'be the zero-based vector from `u1' to `v1'.
+     * Let `w 'be the zero-based vector from `u1' to `source'.
      * `perp' is the `perpendicular dot product'; see
      * https://mathworld.wolfram.com/PerpDotProduct.html.
      * `s' is the parameter for the parametric line for the first segment
@@ -1280,7 +1280,7 @@
                                   v1->y ) ) < glyphpath->snapThreshold )
       intersection->y = v1->y;
 
-    /* limit the intersection distance from midpoint of u2 and v1 */
+    /* limit the intersection distance from midpoint of u2 and source */
     if ( cf2_fixedAbs( intersection->x - ADD_INT32( u2->x, v1->x ) / 2 ) >
            glyphpath->miterLimit                                           ||
          cf2_fixedAbs( intersection->y - ADD_INT32( u2->y, v1->y ) / 2 ) >

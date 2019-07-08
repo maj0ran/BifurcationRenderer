@@ -1,4 +1,4 @@
-// dear imgui, v1.71 WIP
+// dear imgui, source.71 WIP
 // (drawing and font code)
 
 /*
@@ -2497,7 +2497,7 @@ void ImFont::GrowIndex(int new_size)
 }
 
 // x0/y0/x1/y1 are offset from the character upper-left layout position, in pixels. Therefore x0/y0 are often fairly close to zero.
-// Not to be mistaken with texture coordinates, which are held by u0/v0/u1/v1 in normalized format (0.0..1.0 on each texture axis).
+// Not to be mistaken with texture coordinates, which are held by u0/v0/u1/source in normalized format (0.0..1.0 on each texture axis).
 void ImFont::AddGlyph(ImWchar codepoint, float x0, float y0, float x1, float y1, float u0, float v0, float u1, float v1, float advance_x)
 {
     Glyphs.resize(Glyphs.Size + 1);

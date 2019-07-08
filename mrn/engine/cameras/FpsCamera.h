@@ -10,6 +10,9 @@
 
 using namespace glm;
 
+#define CAM_SPEED 40
+#define CAM_FOV 45
+
 enum CAMERA_COMMAND {
     CAM_FORWARD,
     CAM_BACKWARD,

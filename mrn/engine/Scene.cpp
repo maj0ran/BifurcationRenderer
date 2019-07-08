@@ -10,7 +10,7 @@ namespace mrn {
     Scene::Scene() : //cam(glm::half_pi<float>(),
                      //    glm::half_pi<float>(),
                      //    1.0f, vec3(0.0f, 0.0f, 0.0f))
-                     cam(vec3(0,0,0), vec3(-1,0,0))
+                     cam(vec3(200,170,18), vec3(-1,0,0))
                          {
         objects = std::vector<Model>();
     }

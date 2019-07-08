@@ -27,9 +27,9 @@ GLM_FUNC_QUALIFIER glm_vec4 glm_vec4_distance(glm_vec4 p0, glm_vec4 p1)
 GLM_FUNC_QUALIFIER glm_vec4 glm_vec4_dot(glm_vec4 v1, glm_vec4 v2)
 {
 #	if GLM_ARCH & GLM_ARCH_AVX_BIT
-		return _mm_dp_ps(v1, v2, 0xff);
+		return _mm_dp_ps(source, v2, 0xff);
 #	elif GLM_ARCH & GLM_ARCH_SSE3_BIT
-		glm_vec4 const mul0 = _mm_mul_ps(v1, v2);
+		glm_vec4 const mul0 = _mm_mul_ps(source, v2);
 		glm_vec4 const hadd0 = _mm_hadd_ps(mul0, mul0);
 		glm_vec4 const hadd1 = _mm_hadd_ps(hadd0, hadd0);
 		return hadd1;
@@ -46,9 +46,9 @@ GLM_FUNC_QUALIFIER glm_vec4 glm_vec4_dot(glm_vec4 v1, glm_vec4 v2)
 GLM_FUNC_QUALIFIER glm_vec4 glm_vec1_dot(glm_vec4 v1, glm_vec4 v2)
 {
 #	if GLM_ARCH & GLM_ARCH_AVX_BIT
-		return _mm_dp_ps(v1, v2, 0xff);
+		return _mm_dp_ps(source, v2, 0xff);
 #	elif GLM_ARCH & GLM_ARCH_SSE3_BIT
-		glm_vec4 const mul0 = _mm_mul_ps(v1, v2);
+		glm_vec4 const mul0 = _mm_mul_ps(source, v2);
 		glm_vec4 const had0 = _mm_hadd_ps(mul0, mul0);
 		glm_vec4 const had1 = _mm_hadd_ps(had0, had0);
 		return had1;

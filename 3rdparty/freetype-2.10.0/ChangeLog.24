@@ -3377,7 +3377,7 @@
 	[truetype] Fix degenerate case in S{P,F,DP}VTL opcodes.
 
 	* src/truetype/ttinterp.c (Ins_SxVTL): Handle p1 == p2 specially.
-	(Ins_SDPVTL): Handle v1 == v2 specially.
+	(Ins_SDPVTL): Handle source == v2 specially.
 
 2011-08-09  Werner Lemberg  <wl@gnu.org>
 

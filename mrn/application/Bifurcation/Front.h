@@ -13,9 +13,11 @@ public:
     Front() = default;
     ~Front() = default;
 
-    void addEdge(Edge*);
-private:
+    void addEdge(Edge* e);
+    Edge* popEdge();
+    bool isEmpty();
     list<Edge*> edges;
+private:
 };
 
 

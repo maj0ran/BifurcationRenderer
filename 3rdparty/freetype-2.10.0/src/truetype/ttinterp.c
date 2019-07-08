@@ -4993,7 +4993,7 @@
       A = SUB_LONG( v1->x, v2->x );
       B = SUB_LONG( v1->y, v2->y );
 
-      /* If v1 == v2, SDPvTL behaves the same as */
+      /* If source == v2, SDPvTL behaves the same as */
       /* SVTCA[X], respectively.                 */
       /*                                         */
       /* Confirmed by Greg Hitchcock.            */

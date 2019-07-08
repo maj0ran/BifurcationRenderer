@@ -32,31 +32,16 @@ void Bifurcation::read(vector<const char *> &filenames) {
         while (file >> val) {
             line.push_back(val);
             if (file.peek() == '\n') {
-                bifurcationData.push_back(Vertex { vec3(k, line[0], line[1]), vec3(0,0,0)});
+                bifurcationData.push_back(Vertex { vec3(line[0], line[1], line[2]), vec3(0,0,0)});
                 line.clear();
             }
         }
         file.close();
-        k += 0.005;
+        k += 0.0005;
     }
+    scale(1000.0);
 }
 
-mrn::Mesh Bifurcation::generateMesh() {
-    mrn::Mesh mesh;
-
-    vector<Vertex> initPoints;
-    initPoints.push_back(bifurcationData[0]);
-    initPoints.push_back(bifurcationData[1]);
-    initPoints.push_back(bifurcationData[2]);
-
-    Pball pball;
-    pball.pos.x = (initPoints[0].pos.x + initPoints[1].pos.x + initPoints[1].pos.x) / 3.0;
-    pball.pos.y = (initPoints[0].pos.y + initPoints[1].pos.y + initPoints[1].pos.y) / 3.0;
-    pball.pos.z = (initPoints[0].pos.z + initPoints[1].pos.z + initPoints[1].pos.z) / 3.0;
-    pball.r = 0.01;
-
-
-}
 
 
 
@@ -66,16 +51,16 @@ mrn::Mesh Bifurcation::generateMesh() {
  * The normal vector of the best-fitting plane is the left singular vector corresponding
  * to the least singular value.
  */
-vec3 Bifurcation::estimateNormal(int point) {
+void Bifurcation::estimateNormal(int point) {
 
-    vector<int> neighborIndex = getNeighbors(point, 0.007);
+    vector<int> neighborIndex = getNeighbors(point, 10);
     vector<Vertex> neighborPoints;
     for(int i : neighborIndex) {
         neighborPoints.push_back(bifurcationData[i]);
     }
 
     // Calculate the mean of the points
-    Vertex centroid = getCentroid(neighborPoints);
+    Vertex centroid = getCentroid(&neighborPoints);
 
     Eigen::MatrixXf M(3,neighborIndex.size());
     for(int i = 0; i < neighborIndex.size(); i++) {
@@ -100,21 +85,21 @@ vec3 Bifurcation::estimateNormal(int point) {
                    );
 
     bifurcationData[point].normal = vec3(normal.x, normal.y, normal.z);
-    return normal;
+    bifurcationData[point].normal /= 0.1;
 
 
 }
 
-Vertex Bifurcation::getCentroid(vector<Vertex> points) {
+Vertex Bifurcation::getCentroid(vector<Vertex>* points) {
     Vertex centroid = {vec3(0, 0, 0), vec3(0,0,0)};
-    for (int i = 0; i < points.size(); i++) {
-        centroid.pos.x += points[i].pos.x;
-        centroid.pos.y += points[i].pos.y;
-        centroid.pos.z += points[i].pos.z;
+    for (int i = 0; i < points->size(); i++) {
+        centroid.pos.x += (*points)[i].pos.x;
+        centroid.pos.y += (*points)[i].pos.y;
+        centroid.pos.z += (*points)[i].pos.z;
     }
-    centroid.pos.x /= points.size();
-    centroid.pos.y /= points.size();
-    centroid.pos.z /= points.size();
+    centroid.pos.x /= points->size();
+    centroid.pos.y /= points->size();
+    centroid.pos.z /= points->size();
 
     return centroid;
 }
@@ -140,10 +125,24 @@ Vertex Bifurcation::getPointByIndex(int index) {
 }
 
 void Bifurcation::correctNormalDirection() {
-    Vertex center = getCentroid(bifurcationData);
-    for(auto p : bifurcationData) {
-        if(length(center.pos - p.normal) < length(center.pos - p.pos)) {
-            p.normal = -p.normal;
+    int i = 0;
+    Vertex center = getCentroid(&bifurcationData);
+    for(Vertex& p : bifurcationData) {
+        if(length(center.pos - (p.normal + p.pos)) < length(center.pos - p.pos)) {
+            i++;
+            p.normal *= -1;
         }
+    }
+}
+
+void Bifurcation::scale(float factor) {
+    for(Vertex& p : bifurcationData) {
+        p.pos *= factor;
+    }
+}
+
+void Bifurcation::estimateNormals() {
+    for(int i = 0; i < bifurcationData.size(); i++) {
+        estimateNormal(i);
     }
 }

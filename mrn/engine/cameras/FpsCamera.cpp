@@ -14,10 +14,10 @@ namespace mrn {
     mrn::FpsCamera::FpsCamera(vec3 position, vec3 front) {
         this->position = position;
         this->front = front;
-        this->fov = 45;
-        this->speed = 0.3;
-        this->pitch = 10;
-        this->yaw = 45;
+        this->fov = CAM_FOV;
+        this->speed = CAM_SPEED;
+        this->pitch = 0;
+        this->yaw = 0;
         this->update();
 
         front.x = cos(glm::radians(pitch)) * cos(glm::radians(yaw));
@@ -51,7 +51,7 @@ namespace mrn {
         this->up = normalize(cross(this->right, this->front));
 
         // TODO: better Pre-Calculate the projection matrix because it doesn't change all the time (only when we change fov and ScreenSize)
-        projection = perspective(radians(this->fov), 800.0f / 600.0f, 0.1f, 100.0f);
+        projection = perspective(radians(this->fov), 800.0f / 600.0f, 0.1f, 1000.0f);
     }
 
     mat4 FpsCamera::getViewMatrix() {
@@ -101,7 +101,7 @@ namespace mrn {
             }
             case WINDOW_RESIZE: {
                 ScreenSize size = e.readData<ScreenSize>();
-                projection = perspective(radians(this->fov), (float) size.width / size.height, 0.001f, 100.0f);
+                projection = perspective(radians(this->fov), (float) size.width / size.height, 0.001f, 1000.0f);
                 break;
             }
                 default:

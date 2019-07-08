@@ -4898,7 +4898,7 @@
 	A new load flag, FT_LOAD_COLOR, makes FreeType load color
 	embedded-bitmaps, following this draft specification
 
-	  https://color-emoji.googlecode.com/git/specification/v1.html
+	  https://color-emoji.googlecode.com/git/specification/source.html
 
 	which defines two new SFNT tables, `CBDT' and `CBLC' (named and
 	modeled after `EBDT' and `EBLC', respectively).  The color bitmaps

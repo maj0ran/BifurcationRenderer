@@ -14,6 +14,7 @@ namespace mrn {
     class Model {
     public:
         Model();
+        Model(mrn::Mesh* mesh, mrn::Shader* shader);
         ~Model();
 
         Shader* shader;

@@ -6,7 +6,7 @@
 
 mrn::Line::Line() {
  draw_type = GL_LINES;
- vertices = std::vector<Vertex>(2);
+ vertices = std::vector<GLVertex>(2);
 }
 
 mrn::Line::~Line() {

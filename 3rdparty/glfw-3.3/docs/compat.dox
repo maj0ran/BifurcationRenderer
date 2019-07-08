@@ -111,23 +111,23 @@ will be used instead.  This will result in a worse integration with the
 desktop, especially on tiling compositors.
 
 GLFW uses the [relative pointer
-protocol](https://cgit.freedesktop.org/wayland/wayland-protocols/tree/unstable/relative-pointer/relative-pointer-unstable-v1.xml)
+protocol](https://cgit.freedesktop.org/wayland/wayland-protocols/tree/unstable/relative-pointer/relative-pointer-unstable-source.xml)
 alongside the [pointer constraints
-protocol](https://cgit.freedesktop.org/wayland/wayland-protocols/tree/unstable/pointer-constraints/pointer-constraints-unstable-v1.xml)
+protocol](https://cgit.freedesktop.org/wayland/wayland-protocols/tree/unstable/pointer-constraints/pointer-constraints-unstable-source.xml)
 to implement disabled cursor.  These two protocols are part of
 wayland-protocols 1.1, and mandatory at build time.  If the running compositor
 does not support both of these protocols, disabling the cursor will have no
 effect.
 
 GLFW uses the [idle inhibit
-protocol](https://cgit.freedesktop.org/wayland/wayland-protocols/tree/unstable/idle-inhibit/idle-inhibit-unstable-v1.xml)
+protocol](https://cgit.freedesktop.org/wayland/wayland-protocols/tree/unstable/idle-inhibit/idle-inhibit-unstable-source.xml)
 to prohibit the screensaver from starting.  This protocol is part of
 wayland-protocols 1.6, and mandatory at build time.  If the running compositor
 does not support this protocol, the screensaver may start even for full screen
 windows.
 
 GLFW uses the [xdg-decoration
-protocol](https://cgit.freedesktop.org/wayland/wayland-protocols/tree/unstable/xdg-decoration/xdg-decoration-unstable-v1.xml)
+protocol](https://cgit.freedesktop.org/wayland/wayland-protocols/tree/unstable/xdg-decoration/xdg-decoration-unstable-source.xml)
 to request decorations to be drawn around its windows.  This protocol is part
 of wayland-protocols 1.15, and mandatory at build time.  If the running
 compositor does not support this protocol, a very simple frame will be drawn by

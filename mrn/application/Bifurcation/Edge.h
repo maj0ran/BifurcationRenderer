@@ -6,22 +6,29 @@
 
 #include "Vertex.h"
 
-
 enum EdgeState {
-    ACTIVE,
-    BOUNDARY,
-    FROZEN,
+    EDGESTATE_FRONT,
+    EDGESTATE_BOUNDARY,
+    EDGESTATE_INNER,
 };
 class Edge {
 public:
-    Edge(Vertex* v1, Vertex* v2);
+    Vertex* source;
+    Vertex* target;
+    EdgeState state;
+ //   vector<Triangle*> adjacentTriangles;
+    bool addAdjacentTriangle(Triangle* t);
+    Triangle* getTriangle1();
+    Triangle* getTriangle2();
+    Edge(Vertex* source, Vertex* target);
     ~Edge() = default;
 
-    Vertex* v1;
-    Vertex* v2;
-    EdgeState state;
-    Edge* prev;
-    Edge* next;
+    vec3 getMidpoint();
+    Vertex* getOppositeVertex();
+
+private:
+    Triangle* adjacentTriangle1 = nullptr;
+    Triangle* adjacentTriangle2 = nullptr;
 };
 
 

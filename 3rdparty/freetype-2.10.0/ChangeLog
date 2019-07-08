@@ -4724,7 +4724,7 @@
 
 2017-09-23  Werner Lemberg  <wl@gnu.org>
 
-	[otvalid] Handle `GSUB' and `GPOS' v1.1 tables.
+	[otvalid] Handle `GSUB' and `GPOS' source.1 tables.
 
 	* src/otvalid/otvgsub.c (otv_GSUB_validate), src/otvalid/otvgpos.c
 	(otv_GPOS_validate): Implement it.
@@ -4752,7 +4752,7 @@
 
 2017-09-23  Werner Lemberg  <wl@gnu.org>
 
-	[otvalid] Handle `GDEF' v1.2 and v1.3 tables.
+	[otvalid] Handle `GDEF' source.2 and source.3 tables.
 
 	No validation of variation stuff yet.
 
@@ -4761,7 +4761,7 @@
 
 2017-09-22  Werner Lemberg  <wl@gnu.org>
 
-	[otvalid] Handle `BASE' v1.1 table.
+	[otvalid] Handle `BASE' source.1 table.
 
 	No validation of variation stuff yet.
 

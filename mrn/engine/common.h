@@ -11,6 +11,10 @@ typedef unsigned char byte;
 #define RED glm::vec3(1.0, 0.0, 0.0)
 #define GREEN glm::vec3(0.0, 1.0, 0.0)
 #define BLUE glm::vec3(0.0, 0.0, 1.0)
+#define LIGHTBLUE glm::vec3(0.0, 1.0, 1.0)
+#define YELLOW glm::vec3(1.0, 1.0, 0.0)
+#define ORANGE glm::vec3(0.8, 0.5, 0.0)
+#define PINK glm::vec3(1.0, 0.0, 1.0)
 
 
 

@@ -24,15 +24,16 @@ public:
     ~Bifurcation();
     vector<Vertex> bifurcationData;
     void read(vector<const char*>& filenames);
-    mrn::Mesh generateMesh();
-    vec3 estimateNormal(int point);
+    void estimateNormal(int point);
+    void estimateNormals();
     vector<int> getNeighbors(int center, double r);
     Vertex getPointByIndex(int index);
     void correctNormalDirection();
+    void scale(float factor);
 
 private:
 public:
-    Vertex getCentroid(vector<Vertex>);
+    Vertex getCentroid(vector<Vertex>*);
 };
 
 

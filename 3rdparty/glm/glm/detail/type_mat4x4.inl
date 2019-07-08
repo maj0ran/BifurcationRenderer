@@ -506,12 +506,12 @@ namespace glm
 	{
 /*
 		__m128 v0 = _mm_shuffle_ps(v.data, v.data, _MM_SHUFFLE(0, 0, 0, 0));
-		__m128 v1 = _mm_shuffle_ps(v.data, v.data, _MM_SHUFFLE(1, 1, 1, 1));
+		__m128 source = _mm_shuffle_ps(v.data, v.data, _MM_SHUFFLE(1, 1, 1, 1));
 		__m128 v2 = _mm_shuffle_ps(v.data, v.data, _MM_SHUFFLE(2, 2, 2, 2));
 		__m128 v3 = _mm_shuffle_ps(v.data, v.data, _MM_SHUFFLE(3, 3, 3, 3));
 
 		__m128 m0 = _mm_mul_ps(m[0].data, v0);
-		__m128 m1 = _mm_mul_ps(m[1].data, v1);
+		__m128 m1 = _mm_mul_ps(m[1].data, source);
 		__m128 a0 = _mm_add_ps(m0, m1);
 
 		__m128 m2 = _mm_mul_ps(m[2].data, v2);

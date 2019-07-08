@@ -9,35 +9,35 @@ namespace mrn {
     Mesh* mrn::Primitive::createCube() {
         mrn::Mesh* cube = new Mesh();
 
-        mrn::Vertex ldf;
+        mrn::GLVertex ldf;
         ldf.pos = vec3(-0.5, -0.5, -0.5);
         ldf.rgb =  vec3(0.0, 0.0, 0.0);
 
-        mrn::Vertex luf;
+        mrn::GLVertex luf;
         luf.pos = vec3(-0.5, 0.5, -0.5);
         luf.rgb = vec3(0.0, 0.0, 1.0);
 
-        mrn::Vertex rdf;
+        mrn::GLVertex rdf;
         rdf.pos = vec3(0.5, -0.5, -0.5);
         rdf.rgb = vec3(0.0, 1.0, 0.0);
 
-        mrn::Vertex ruf;
+        mrn::GLVertex ruf;
         ruf.pos = vec3(0.5, 0.5, -0.5);
         ruf.rgb = vec3(0.0, 1.0, 1.0);
 
-        mrn::Vertex ldb;
+        mrn::GLVertex ldb;
         ldb.pos = vec3(-0.5, -0.5, 0.5);
         ldb.rgb = vec3(1.0, 0.0, 0.0);
 
-        mrn::Vertex lub;
+        mrn::GLVertex lub;
         lub.pos = vec3(-0.5, 0.5, 0.5);
         lub.rgb = vec3(1.0, 0.0, 1.0);
 
-        mrn::Vertex rdb;
+        mrn::GLVertex rdb;
         rdb.pos = vec3(0.5, -0.5, 0.5);
         rdb.rgb = vec3(1.0, 1.0, 0.0);
 
-        mrn::Vertex rub;
+        mrn::GLVertex rub;
         rub.pos = vec3(0.5, 0.5, 0.5);
         rub.rgb = vec3(1.0, 1.0, 1.0);
 
@@ -75,15 +75,15 @@ namespace mrn {
     Mesh* Primitive::createTriangle() {
         Mesh* triangle = new Mesh();
 
-        Vertex left;
+        GLVertex left;
         left.pos = vec3(-0.5f, -0.5f, 0.0f);
         left.rgb = vec3(1.0f, 0.0f, 0.0f);
 
-        Vertex right;
+        GLVertex right;
         right.pos = vec3(0.5f, -0.5f, 0.0f);
         right.rgb = vec3(0.0f, 1.0f, 0.0f);
 
-        Vertex up;
+        GLVertex up;
         up.pos = vec3(0.0f, 0.5f, 0.0f);
         up.rgb = vec3(0.0f, 0.0f, 1.0f);
 
@@ -103,11 +103,11 @@ namespace mrn {
     Mesh *Primitive::createPyramid() {
         Mesh* pyramid = new Mesh();
 
-        Vertex leftbottom;
-        Vertex rightbottom;
-        Vertex lefttop;
-        Vertex righttop;
-        Vertex up;
+        GLVertex leftbottom;
+        GLVertex rightbottom;
+        GLVertex lefttop;
+        GLVertex righttop;
+        GLVertex up;
 
         leftbottom.pos = vec3(-0.5, -0.5, -0.5);
         rightbottom.pos = vec3(0.5, -0.5, -0.5);

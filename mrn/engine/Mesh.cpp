@@ -15,7 +15,7 @@ namespace mrn {
 
     }
 
-    void Mesh::addVertex(mrn::Vertex &vertex) {
+    void Mesh::addVertex(mrn::GLVertex &vertex) {
         this->vertices.push_back(vertex);
     }
 

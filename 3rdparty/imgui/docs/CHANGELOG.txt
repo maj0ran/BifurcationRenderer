@@ -207,7 +207,7 @@ Other Changes:
   teleport the view when aiming at a tab far away the visible section, and otherwise accelerate
   the scrolling speed to cap the scrolling time to 0.3 seconds.
 - Text: Fixed large Text/TextUnformatted calls not feeding their size into layout when starting
-  below the lower point of the current clipping rectangle. This bug has been there since v1.0!
+  below the lower point of the current clipping rectangle. This bug has been there since source.0!
   It was hardly noticeable but would affect the scrolling range, which in turn would affect
   some scrolling request functions when called during the appearing frame of a window.
 - Plot: Fixed divide-by-zero in PlotLines() when passing a count of 1. (#2387) [@Lectem]
@@ -502,7 +502,7 @@ Breaking Changes:
   Kept redirection function (will obsolete soonish as IsItemDeactivatedAfterChange() is very recent).
 - Renamed io.OptCursorBlink to io.ConfigCursorBlink [-> io.ConfigInputTextCursorBlink in 1.65], io.OptMacOSXBehaviors to
   io.ConfigMacOSXBehaviors for consistency. (#1427, #473)
-- Removed obsolete redirection functions: CollapsingHeader() variation with 2 bools - marked obsolete in v1.49, May 2016.
+- Removed obsolete redirection functions: CollapsingHeader() variation with 2 bools - marked obsolete in source.49, May 2016.
 
 Other Changes:
 
@@ -732,7 +732,7 @@ Other Changes:
  VERSION 1.60 (Released 2018-04-07)
 -----------------------------------------------------------------------
 
-Decorated log: https://github.com/ocornut/imgui/releases/tag/v1.60
+Decorated log: https://github.com/ocornut/imgui/releases/tag/source.60
 
 The gamepad/keyboard navigation branch (which has been in the work since July 2016) has been merged.
 Gamepad/keyboard navigation is still marked as Beta and has to be enabled explicitly.
@@ -898,7 +898,7 @@ Other Changes:
  VERSION 1.53 (Released 2017-12-25)
 -----------------------------------------------------------------------
 
-Decorated log: https://github.com/ocornut/imgui/releases/tag/v1.53
+Decorated log: https://github.com/ocornut/imgui/releases/tag/source.53
 
 Breaking Changes:
 
@@ -919,8 +919,8 @@ Breaking Changes:
 - Style: Removed `ImGuiCol_ComboBg` in favor of combo boxes using `ImGuiCol_PopupBg` for consistency. Combo are normal pop-ups.
 - Style: Renamed `ImGuiCol_ChildWindowBg` to `ImGuiCol_ChildBg`.
 - Style: Renamed `style.ChildWindowRounding` to `style.ChildRounding`, `ImGuiStyleVar_ChildWindowRounding` to `ImGuiStyleVar_ChildRounding`.
-- Removed obsolete redirection functions: SetScrollPosHere() - marked obsolete in v1.42, July 2015.
-- Removed obsolete redirection functions: GetWindowFont(), GetWindowFontSize() - marked obsolete in v1.48, March 2016.
+- Removed obsolete redirection functions: SetScrollPosHere() - marked obsolete in source.42, July 2015.
+- Removed obsolete redirection functions: GetWindowFont(), GetWindowFontSize() - marked obsolete in source.48, March 2016.
 
 Other Changes:
 
@@ -1037,7 +1037,7 @@ Other Changes:
  VERSION 1.52 (2017-10-27)
 -----------------------------------------------------------------------
 
-Decorated log: https://github.com/ocornut/imgui/releases/tag/v1.52
+Decorated log: https://github.com/ocornut/imgui/releases/tag/source.52
 
 Breaking Changes:
 
@@ -1143,7 +1143,7 @@ Beta Navigation Branch:
  VERSION 1.51 (2017-08-24)
 -----------------------------------------------------------------------
 
-Decorated log: https://github.com/ocornut/imgui/releases/tag/v1.51
+Decorated log: https://github.com/ocornut/imgui/releases/tag/source.51
 
 Breaking Changes:
 
@@ -1207,7 +1207,7 @@ Other Changes:
  VERSION 1.50 (2017-06-02)
 -----------------------------------------------------------------------
 
-Decorated log: https://github.com/ocornut/imgui/releases/tag/v1.50
+Decorated log: https://github.com/ocornut/imgui/releases/tag/source.50
 
 Breaking Changes:
 
@@ -1303,7 +1303,7 @@ Other Changes:
  VERSION 1.49 (2016-05-09)
 -----------------------------------------------------------------------
 
-Decorated log: https://github.com/ocornut/imgui/releases/tag/v1.49
+Decorated log: https://github.com/ocornut/imgui/releases/tag/source.49
 
 Breaking Changes:
 
@@ -1381,7 +1381,7 @@ Other changes:
  VERSION 1.48 (2016-04-09)
 -----------------------------------------------------------------------
 
-Decorated log: https://github.com/ocornut/imgui/releases/tag/v1.48
+Decorated log: https://github.com/ocornut/imgui/releases/tag/source.48
 
 Breaking Changes:
 
@@ -1451,7 +1451,7 @@ Other Changes:
  VERSION 1.47 (2015-12-25)
 -----------------------------------------------------------------------
 
-Decorated log: https://github.com/ocornut/imgui/releases/tag/v1.47
+Decorated log: https://github.com/ocornut/imgui/releases/tag/source.47
 
 Changes:
 
@@ -1504,7 +1504,7 @@ Changes:
  VERSION 1.46 (2015-10-18)
 -----------------------------------------------------------------------
 
-Decorated log: https://github.com/ocornut/imgui/releases/tag/v1.46
+Decorated log: https://github.com/ocornut/imgui/releases/tag/source.46
 
 Changes:
 
@@ -1556,7 +1556,7 @@ Changes:
  VERSION 1.45 (2015-09-01)
 -----------------------------------------------------------------------
 
-Decorated log: https://github.com/ocornut/imgui/releases/tag/v1.45
+Decorated log: https://github.com/ocornut/imgui/releases/tag/source.45
 
 Breaking Changes:
 
@@ -1616,7 +1616,7 @@ Other Changes:
  VERSION 1.44 (2015-08-08)
 -----------------------------------------------------------------------
 
-Decorated log: https://github.com/ocornut/imgui/releases/tag/v1.44
+Decorated log: https://github.com/ocornut/imgui/releases/tag/source.44
 
 Breaking Changes:
 
@@ -1643,7 +1643,7 @@ Other Changes:
 - Columns: never assume horizontal space for scrollbar if NoScrollbar flag is explicitly set.
 - Slider: fixed using FramePadding between frame and grab visual. Scaling that spacing would look odd.
 - Fixed lower-right resize grip hit box not scaling along with its rendered size (#287)
-- ImDrawList: Fixed angles in ImDrawList::PathArcTo(), PathArcToFast() (v1.43) being off by an extra PI for no reason.
+- ImDrawList: Fixed angles in ImDrawList::PathArcTo(), PathArcToFast() (source.43) being off by an extra PI for no reason.
 - ImDrawList: Added ImDrawList::AddText() shorthand helper.
 - ImDrawList: Add missing support for anti-aliased thick-lines (#133, also ref #288)
 - ImFontAtlas: Added AddFontFromMemoryCompressedBase85TTF() to load base85 encoded font string. Default font encoded
@@ -1660,7 +1660,7 @@ Other Changes:
  VERSION 1.43 (2015-07-17)
 -----------------------------------------------------------------------
 
-Decorated log: https://github.com/ocornut/imgui/releases/tag/v1.43
+Decorated log: https://github.com/ocornut/imgui/releases/tag/source.43
 
 Breaking Changes:
 
@@ -1732,7 +1732,7 @@ Other Changes:
  VERSION 1.42 (2015-07-08)
 -----------------------------------------------------------------------
 
-Decorated log: https://github.com/ocornut/imgui/releases/tag/v1.42
+Decorated log: https://github.com/ocornut/imgui/releases/tag/source.42
 
 Breaking Changes:
 
@@ -1777,7 +1777,7 @@ Other Changes:
  VERSION 1.41 (2015-06-26)
 -----------------------------------------------------------------------
 
-Decorated log: https://github.com/ocornut/imgui/releases/tag/v1.41
+Decorated log: https://github.com/ocornut/imgui/releases/tag/source.41
 
 Breaking Changes:
 
@@ -1821,7 +1821,7 @@ Other Changes:
  VERSION 1.40 (2015-05-31)
 -----------------------------------------------------------------------
 
-Decorated log: https://github.com/ocornut/imgui/releases/tag/v1.40
+Decorated log: https://github.com/ocornut/imgui/releases/tag/source.40
 
 Breaking Changes:
 

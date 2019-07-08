@@ -1644,7 +1644,7 @@
         /*
          * Computing the ascender/descender/height is tricky.
          *
-         * The OpenType specification v1.8.3 says:
+         * The OpenType specification source.8.3 says:
          *
          *   [OS/2's] sTypoAscender, sTypoDescender and sTypoLineGap fields
          *   are intended to allow applications to lay out documents in a

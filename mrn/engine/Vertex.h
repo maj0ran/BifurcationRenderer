@@ -6,16 +6,27 @@
 #include <stddef.h>
 #include <glm.hpp>
 #include "common.h"
+#include "../application/Bifurcation/Vertex.h"
 
 using namespace glm;
 
 namespace mrn {
-    struct Vertex {
-    //    Vertex() = default;
-    //    explicit Vertex(vec3 pos) { this->pos = pos; this->rgb = RED; }
+    struct GLVertex {
+        GLVertex() = default;
+        explicit GLVertex(vec3 pos) { this->pos = pos; this->rgb = RED; }
         vec3 pos;
         vec3 rgb;
         vec2 tex;
+
+        GLVertex(Vertex v) {
+            this->pos = v.pos;
+            this->rgb = RED;
+        }
+
+        GLVertex(Vertex v, vec3 color) {
+            this->pos = v.pos;
+            this->rgb = color;
+        }
     };
 
 
