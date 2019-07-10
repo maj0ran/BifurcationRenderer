@@ -23,8 +23,8 @@ void Debug::toVram() {
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
     glBufferData(GL_ARRAY_BUFFER, getVertexCount() * sizeof(mrn::GLVertex), &this->points[0], GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)offsetof(mrn::GLVertex, rgb));
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(mrn::GLVertex), (void*)0);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(mrn::GLVertex), (void*)offsetof(mrn::GLVertex, rgb));
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
 }

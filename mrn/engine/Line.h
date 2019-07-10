@@ -5,7 +5,7 @@
 #pragma once
 
 #include <glad/glad.h>
-#include "Vertex.h"
+#include "GLVertex.h"
 #include "Mesh.h"
 
 namespace mrn {

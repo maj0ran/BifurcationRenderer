@@ -5,39 +5,34 @@
 #pragma once
 
 #include <glad/glad.h>
-#include "Vertex.h"
+#include "GLVertex.h"
 #include "TriangleIndex.h"
 #include <vector>
 
 namespace mrn {
 
-    struct Normal {
-        vec3 pos;
-        vec3 dir;
-    };
+
 
     class Mesh {
     public:
-        std::vector<mrn::GLVertex> vertices;
-        std::vector<uint32> indices;
-
-
         Mesh();
         virtual ~Mesh();
 
-        void addVertex(mrn::GLVertex &vertex);
-        void addTriangleIndices(uint32 p1, uint32 p2, uint32 p3);
-        void addTriangle(TriangleIndex triangle);
+        std::vector<mrn::GLVertex> vertices;
+        std::vector<uint32_t> indices;
 
+        void setPatchSize(int size);
+        int getPatchSize();
+
+
+        void addVertex(mrn::GLVertex &vertex);
+        void addIndex(uint32 i);
 
         GLuint draw_type = GL_TRIANGLES;
         bool use_indices = false;
 
-        size_t getTriangleCount();
-        TriangleIndex getTriangle(size_t index);
-        Normal calcNormalOfTriangle(size_t index);
     private:
-        std::vector<TriangleIndex> triangleIndices;
+        int patch_size;
     };
 }
 

@@ -17,6 +17,7 @@ namespace mrn {
         vec3 pos;
         vec3 rgb;
         vec2 tex;
+        vec3 normal;
 
         GLVertex(Vertex v) {
             this->pos = v.pos;

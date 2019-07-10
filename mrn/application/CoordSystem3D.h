@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "../engine/Vertex.h"
+#include "../engine/GLVertex.h"
 #include "../engine/Line.h"
 
 #include <glad/glad.h>

@@ -53,8 +53,8 @@ namespace mrn {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, vertex_data->indices.size() * sizeof(uint32), &vertex_data->indices[0], GL_STATIC_DRAW);
 
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
-        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)offsetof(GLVertex, rgb));
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(mrn::GLVertex), (void*)0);
+        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(mrn::GLVertex), (void*)offsetof(GLVertex, rgb));
         glEnableVertexAttribArray(0);
         glEnableVertexAttribArray(1);
     }

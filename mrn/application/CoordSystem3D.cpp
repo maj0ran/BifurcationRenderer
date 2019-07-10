@@ -5,7 +5,6 @@
 #include "CoordSystem3D.h"
 #include "../engine/common.h"
 #include "../engine/Mesh.h"
-#include "../engine/Primitives.h"
 
 namespace mrn {
 
@@ -52,11 +51,6 @@ namespace mrn {
         vertices.insert(std::end(vertices), std::begin(y.axis_line.vertices), std::end(y.axis_line.vertices));
         vertices.insert(std::end(vertices), std::begin(z.axis_line.vertices), std::end(z.axis_line.vertices));
 
-        mrn::Mesh* x_arrow = mrn::Primitive::createPyramid();
-        mrn::Mesh* y_arrow = mrn::Primitive::createPyramid();
-        mrn::Mesh* z_arrow = mrn::Primitive::createPyramid();
-
-   //     x_arrow.
     }
 
     CoordSystem3D::~CoordSystem3D() {

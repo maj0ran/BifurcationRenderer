@@ -4,7 +4,7 @@
 
 #include "Vertex.h"
 #include "Edge.h"
-#include "../../engine/Vertex.h"
+#include "../../engine/GLVertex.h"
 #include "Triangle.h"
 
 

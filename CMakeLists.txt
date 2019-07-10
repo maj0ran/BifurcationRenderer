@@ -25,8 +25,40 @@ include_directories(3rdparty/freetype-2.10.0/include)
 #dear-imgui
 include_directories(3rdparty/imgui)
 
+#Ball Pivot Algorithm
+#add_subdirectory(3rdparty/BallPivoting)
+include_directories(3rdparty/BallPivoting/src)
+
+#Python-API
+find_package(PythonInterp REQUIRED)
+find_package(PythonLibs REQUIRED)
+include_directories(${PYTHON_INCLUDE_DIRS})
+
+#Numpy-API
+exec_program(${PYTHON_EXECUTABLE}
+        ARGS "-c \"import numpy; print(numpy.get_include())\""
+        OUTPUT_VARIABLE NUMPY_INCLUDE_DIR
+        RETURN_VALUE NUMPY_NOT_FOUND
+        )
+if(NUMPY_NOT_FOUND)
+    message(FATAL_ERROR "NumPy headers not found")
+endif()
+
+include_directories(${NUMPY_INCLUDE_DIR})
+
 # Compilation and Linking
 set(SOURCES main.cpp
+        3rdparty/BallPivoting/src/Edge.cpp
+        3rdparty/BallPivoting/src/Point.cpp
+        3rdparty/BallPivoting/src/GLVertex.cpp
+        3rdparty/BallPivoting/src/Facet.cpp
+        3rdparty/BallPivoting/src/FileIO.cpp
+        3rdparty/BallPivoting/src/Mesher.cpp
+        3rdparty/BallPivoting/src/Octree.h
+        3rdparty/BallPivoting/src/OctreeIterator.h
+        3rdparty/BallPivoting/src/OctreeNode.h
+        3rdparty/BallPivoting/src/types.h
+        3rdparty/BallPivoting/src/utilities.h
         3rdparty/glad/src/glad.c
         3rdparty/imgui/imgui.cpp
         3rdparty/imgui/imgui_widgets.cpp
@@ -49,14 +81,13 @@ set(SOURCES main.cpp
         mrn/engine/common.h
         mrn/engine/cameras/ArcballCamera.cpp
         mrn/engine/cameras/ArcballCamera.h
-        mrn/engine/Primitives.cpp
         mrn/MathSolver.cpp mrn/MathSolver.h
         mrn/engine/cameras/Camera.cpp mrn/engine/cameras/Camera.h
-        mrn/engine/Engine.cpp mrn/engine/Engine.h mrn/application/Trashcan/P.cpp mrn/application/Trashcan/P.h mrn/engine/eventbus/Event.cpp mrn/engine/eventbus/Event.h mrn/engine/eventbus/EventBus.cpp mrn/engine/eventbus/EventBus.h mrn/engine/eventbus/BusNode.cpp mrn/engine/eventbus/BusNode.h mrn/engine/eventbus/EventTypes.h mrn/application/Interface.cpp mrn/application/Interface.h mrn/application/Trashcan/Gauss.cpp mrn/application/Trashcan/Gauss.h mrn/engine/TriangleIndex.cpp mrn/engine/TriangleIndex.h mrn/application/Bifurcation/Bifurcation.cpp mrn/application/Bifurcation/Bifurcation.h mrn/application/Bifurcation/Vertex.cpp mrn/application/Bifurcation/Vertex.h mrn/application/Bifurcation/Mesher.cpp mrn/application/Bifurcation/Mesher.h mrn/application/Bifurcation/Edge.cpp mrn/application/Bifurcation/Edge.h mrn/application/Bifurcation/Front.cpp mrn/application/Bifurcation/Front.h mrn/application/Bifurcation/Triangle.cpp mrn/application/Bifurcation/Triangle.h mrn/application/Bifurcation/Circumsphere.cpp mrn/application/Bifurcation/Circumsphere.h mrn/Debug.cpp mrn/Debug.h mrn/application/Bifurcation/Mesh.cpp mrn/application/Bifurcation/Mesh.h mrn/application/FileIO.cpp mrn/application/FileIO.h)
+        mrn/engine/Engine.cpp mrn/engine/Engine.h mrn/application/Trashcan/P.cpp mrn/application/Trashcan/P.h mrn/engine/eventbus/Event.cpp mrn/engine/eventbus/Event.h mrn/engine/eventbus/EventBus.cpp mrn/engine/eventbus/EventBus.h mrn/engine/eventbus/BusNode.cpp mrn/engine/eventbus/BusNode.h mrn/engine/eventbus/EventTypes.h mrn/application/Interface.cpp mrn/application/Interface.h mrn/application/Trashcan/Gauss.cpp mrn/application/Trashcan/Gauss.h mrn/engine/TriangleIndex.cpp mrn/engine/TriangleIndex.h mrn/application/Bifurcation/Bifurcation.cpp mrn/application/Bifurcation/Bifurcation.h mrn/application/Bifurcation/Vertex.cpp mrn/application/Bifurcation/Vertex.h mrn/application/Bifurcation/Mesher.cpp mrn/application/Bifurcation/Mesher.h mrn/application/Bifurcation/Edge.cpp mrn/application/Bifurcation/Edge.h mrn/application/Bifurcation/Front.cpp mrn/application/Bifurcation/Front.h mrn/application/Bifurcation/Triangle.cpp mrn/application/Bifurcation/Triangle.h mrn/application/Bifurcation/Circumsphere.cpp mrn/application/Bifurcation/Circumsphere.h mrn/Debug.cpp mrn/Debug.h mrn/application/Bifurcation/Mesh.cpp mrn/application/Bifurcation/Mesh.h mrn/application/FileIO.cpp mrn/application/FileIO.h mrn/PyInterface.cpp mrn/PyInterface.h mrn/PyFunction.cpp mrn/PyFunction.h mrn/PlyReader.cpp mrn/PlyReader.h)
 
 
 add_executable(${PROJECT_NAME} ${SOURCES})
-target_link_libraries(${PROJECT_NAME} glfw freetype)
+target_link_libraries(${PROJECT_NAME} glfw freetype ${PYTHON_LIBRARIES})
 
 # Forcing CMake to copy non-code files in the build directory
 add_custom_command(TARGET ${PROJECT_NAME} PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/shader $<TARGET_FILE_DIR:${PROJECT_NAME}>/shader)

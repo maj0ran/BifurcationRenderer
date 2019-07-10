@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "Vertex.h"
+#include "GLVertex.h"
 
 namespace mrn {
     class TriangleIndex {

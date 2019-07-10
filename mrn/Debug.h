@@ -7,7 +7,7 @@
 #include <vector>
 #include <vec3.hpp>
 #include "engine/Shader.h"
-#include "engine/Vertex.h"
+#include "engine/GLVertex.h"
 
 class Debug {
 private:

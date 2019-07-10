@@ -4,7 +4,7 @@
 
 #include <ext.hpp>
 #include "FontRenderer.h"
-#include "Vertex.h"
+#include "GLVertex.h"
 #include "common.h"
 
 namespace mrn {

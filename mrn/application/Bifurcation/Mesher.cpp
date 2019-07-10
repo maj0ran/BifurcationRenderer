@@ -235,7 +235,7 @@ std::pair<bool, vec3> Mesher::calcCircumcenter(Vertex *a, Vertex *b, Vertex *c) 
     //  debugger.addPoint(a->pos, BLUE);
     //   debugger.addPoint(b->pos, BLUE);
     //   debugger.addPoint(c->pos, BLUE);
-    printf("circumcenter: %f %f %f\n", circumcenter.x, circumcenter.y, circumcenter.z);
+  //  printf("circumcenter: %f %f %f\n", circumcenter.x, circumcenter.y, circumcenter.z);
     return {true, circumcenter};
 
 }
